@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import json
 import os
+import platform
 from pathlib import Path
 import shutil
 import subprocess
@@ -102,21 +103,74 @@ def run_workload(name, cache_mode):
         "identity": identity,
         "stages": [],
         "passed": False,
+        "provider": os.environ.get("BENCH_PROVIDER", "local"),
+        "sample": int(os.environ.get("BENCH_SAMPLE", "0")),
+        "seed": os.environ.get("BENCH_SEED", "false") == "true",
+        "commit": subprocess.check_output(
+            ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
+        ).strip(),
+        "environment": {
+            "platform": platform.platform(),
+            "cpu_count": os.cpu_count(),
+            "affinity": sorted(os.sched_getaffinity(0))
+            if hasattr(os, "sched_getaffinity")
+            else None,
+            "python": platform.python_version(),
+            "tools": {
+                tool: subprocess.check_output([tool, "--version"], text=True).strip()
+                for tool in ["node", "rustc", "cargo", "uv", "mise"]
+            },
+            "proc": {
+                name: Path(name).read_text()
+                for name in [
+                    "/etc/os-release",
+                    "/proc/cpuinfo",
+                    "/proc/meminfo",
+                    "/proc/self/cgroup",
+                ]
+                if Path(name).is_file()
+            },
+        },
     }
 
     def stage(label, args, cwd=ROOT):
         started = time.monotonic()
+        entry = {"name": label, "command": list(map(str, args)), "passed": False}
+        timing = results / f"{name}-{cache_mode}-{label}.time"
+        measured = (
+            [
+                "/usr/bin/time",
+                "--quiet",
+                "--format=%M\n%U\n%S\n%e\n%x",
+                "--output",
+                timing,
+                *args,
+            ]
+            if sys.platform == "linux"
+            else args
+        )
         try:
-            command(args, cwd=cwd, env=env)
+            command(measured, cwd=cwd, env=env)
+            entry["passed"] = True
         finally:
-            report["stages"].append(
-                {
-                    "name": label,
-                    "command": list(map(str, args)),
-                    "seconds": time.monotonic() - started,
+            entry["seconds"] = time.monotonic() - started
+            if sys.platform == "linux" and timing.exists():
+                rss, user, system, elapsed, status = (
+                    timing.read_text().strip().splitlines()
+                )
+                entry["resources"] = {
+                    "max_rss_kib": int(rss),
+                    "user_seconds": float(user),
+                    "system_seconds": float(system),
+                    "elapsed_seconds": float(elapsed),
+                    "exit_code": int(status),
                 }
-            )
+                timing.unlink()
+            report["stages"].append(entry)
 
+    report["cache_bytes_before"] = sum(
+        p.stat().st_size for p in cache.rglob("*") if p.is_file()
+    )
     started = time.monotonic()
     try:
         if "source" in definition:
@@ -255,6 +309,9 @@ def run_workload(name, cache_mode):
         marker.write_text(json.dumps(identity, indent=2))
     finally:
         report["seconds"] = time.monotonic() - started
+        report["cache_bytes_after"] = sum(
+            p.stat().st_size for p in cache.rglob("*") if p.is_file()
+        )
         (results / f"{name}-{cache_mode}.json").write_text(json.dumps(report, indent=2))
 
 

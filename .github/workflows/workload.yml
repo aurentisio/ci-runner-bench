@@ -1,0 +1,69 @@
+name: Workload
+
+on:
+  workflow_call:
+    inputs:
+      provider: {type: string, required: true}
+      runner: {type: string, required: true}
+      workload: {type: string, required: true}
+      profile: {type: string, required: true}
+      sample: {type: number, required: true}
+      seed: {type: boolean, required: true}
+
+permissions:
+  contents: read
+
+jobs:
+  workload:
+    name: ${{ inputs.provider }} / ${{ inputs.workload }} / ${{ inputs.profile }} / ${{ inputs.sample }}
+    runs-on: ${{ inputs.runner }}
+    timeout-minutes: 5
+    env:
+      BENCH_PROVIDER: ${{ inputs.provider }}
+      BENCH_WORKLOAD: ${{ inputs.workload }}
+      BENCH_PROFILE: ${{ inputs.profile }}
+      BENCH_SAMPLE: ${{ inputs.sample }}
+      BENCH_SEED: ${{ inputs.seed }}
+      PYTHONUNBUFFERED: "1"
+      LC_ALL: C.UTF-8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup pinned tools
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+        with:
+          version: 2026.11.4
+          cache: false
+
+      - name: Restore native dependency cache
+        if: inputs.profile == 'warm'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: .bench/cache/${{ inputs.workload }}
+          key: bench-v1-${{ github.run_id }}-${{ inputs.provider }}-${{ runner.os }}-${{ runner.arch }}-${{ inputs.workload }}-${{ hashFiles('workloads.json', 'mise.toml', 'package-lock.json', 'uv.lock') }}
+          fail-on-cache-miss: true
+
+      - name: Run workload
+        run: python scripts/bench.py run "$BENCH_WORKLOAD" --cache "$BENCH_PROFILE"
+
+      - name: Save native dependency cache seed
+        if: inputs.seed
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: .bench/cache/${{ inputs.workload }}
+          key: bench-v1-${{ github.run_id }}-${{ inputs.provider }}-${{ runner.os }}-${{ runner.arch }}-${{ inputs.workload }}-${{ hashFiles('workloads.json', 'mise.toml', 'package-lock.json', 'uv.lock') }}
+
+      - name: Upload result
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: bench-${{ inputs.provider }}-${{ inputs.workload }}-${{ inputs.profile }}-${{ inputs.sample }}
+          path: |
+            .bench/results/*.json
+            .bench/work/${{ inputs.workload }}/pyperformance.json
+          include-hidden-files: true
+          retention-days: 30
+          if-no-files-found: warn

@@ -1,0 +1,69 @@
+name: Benchmark
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        description: Provider selection (all compares the three connected providers)
+        type: choice
+        options: [all, github, blacksmith, boat]
+        default: all
+      workload:
+        description: Workload selection
+        type: choice
+        options: [all, typescript-compiler, rust-regex, rust-ripgrep, python-jinja, python-pyperformance]
+        default: all
+
+permissions:
+  contents: read
+
+concurrency:
+  group: benchmark
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    outputs:
+      seed: ${{ steps.plan.outputs.seed }}
+      measure: ${{ steps.plan.outputs.measure }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - id: plan
+        env:
+          SELECT_PROVIDER: ${{ inputs.provider }}
+          SELECT_WORKLOAD: ${{ inputs.workload }}
+        run: python3 scripts/plan.py >> "$GITHUB_OUTPUT"
+
+  seed:
+    needs: plan
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: ${{ fromJSON(needs.plan.outputs.seed) }}
+    uses: ./.github/workflows/workload.yml
+    with:
+      provider: ${{ matrix.provider }}
+      runner: ${{ matrix.runner }}
+      workload: ${{ matrix.workload }}
+      profile: ${{ matrix.profile }}
+      sample: ${{ matrix.sample }}
+      seed: true
+
+  measure:
+    needs: [plan, seed]
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: ${{ fromJSON(needs.plan.outputs.measure) }}
+    uses: ./.github/workflows/workload.yml
+    with:
+      provider: ${{ matrix.provider }}
+      runner: ${{ matrix.runner }}
+      workload: ${{ matrix.workload }}
+      profile: ${{ matrix.profile }}
+      sample: ${{ matrix.sample }}
+      seed: false
