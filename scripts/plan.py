@@ -9,6 +9,7 @@ PROVIDERS = {
     "github": "ubuntu-24.04",
     "blacksmith": "blacksmith-4vcpu-ubuntu-2404",
     "boat": "boat",
+    "namespace": "nscloud-ubuntu-24.04-amd64-4x16",
 }
 spec = json.loads((ROOT / "workloads.json").read_text())
 selected_provider = os.environ["SELECT_PROVIDER"]
@@ -55,6 +56,9 @@ for sample in [1, 2, 3]:
 pilot = json.loads((ROOT / "results/pilot.json").read_text())[
     "spent_job_seconds_per_provider"
 ]
+pilot["namespace"] = json.loads(
+    (ROOT / "results/namespace-readiness/run.json").read_text()
+)["execution_seconds"]
 for provider in providers:
     scheduled_minutes = 5 * sum(r["provider"] == provider for r in seed + measure)
     # Include the plan job and leave time for uploads/cleanup and selective retries.

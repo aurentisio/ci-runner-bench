@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       provider:
-        description: Provider selection (all compares the three connected providers)
+        description: Provider selection (all compares the four connected providers)
         type: choice
-        options: [all, github, blacksmith, boat]
+        options: [all, github, blacksmith, boat, namespace]
         default: all
       workload:
         description: Workload selection
