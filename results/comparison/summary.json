@@ -1,0 +1,2933 @@
+{
+  "run": {
+    "id": 42508215226,
+    "html_url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226",
+    "head_sha": "81e48cd0f04e0f7b8efc577a094f760feb25f5d8",
+    "status": "completed",
+    "conclusion": "success",
+    "created_at": "2026-11-08T18:05:31Z",
+    "updated_at": "2026-11-08T18:20:27Z",
+    "run_attempt": 1
+  },
+  "runs": [
+    {
+      "id": 42508215226,
+      "html_url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226",
+      "head_sha": "81e48cd0f04e0f7b8efc577a094f760feb25f5d8",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-08T18:05:31Z",
+      "updated_at": "2026-11-08T18:20:27Z",
+      "run_attempt": 1
+    },
+    {
+      "id": 42512395289,
+      "html_url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42512395289",
+      "head_sha": "75170bba71bd7e7c2817d1b65de1aeeb59e34376",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-11-08T18:55:24Z",
+      "updated_at": "2026-11-08T19:00:13Z",
+      "run_attempt": 1
+    }
+  ],
+  "providers": [
+    "github",
+    "blacksmith",
+    "boat",
+    "namespace"
+  ],
+  "harness_behavior_verified_equal": true,
+  "hardware": {
+    "github": {
+      "cpu_models": [
+        "AMD EPYC 7763 64-Core Processor",
+        "AMD EPYC 9V45 96-Core Processor",
+        "AMD EPYC 9V74 80-Core Processor",
+        "INTEL(R) XEON(R) PLATINUM 8573C",
+        "Intel(R) Xeon(R) 6973P-C",
+        "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
+      ],
+      "memory_kib": [
+        16366508,
+        16366512,
+        16367520,
+        16367524,
+        16367528,
+        16371804
+      ],
+      "cpus": 4
+    },
+    "blacksmith": {
+      "cpu_models": [
+        "AMD EPYC",
+        "Intel(R) Xeon(R) Processor"
+      ],
+      "memory_kib": [
+        16168148
+      ],
+      "cpus": 4
+    },
+    "boat": {
+      "cpu_models": [
+        "AMD Ryzen 7 9700X 8-Core Processor",
+        "AMD Ryzen 9 9950X 16-Core Processor"
+      ],
+      "memory_kib": [
+        8131940,
+        8131944
+      ],
+      "cpus": 4
+    },
+    "namespace": {
+      "cpu_models": [
+        "AMD EPYC"
+      ],
+      "memory_kib": [
+        16438740
+      ],
+      "cpus": 4
+    }
+  },
+  "groups": [
+    {
+      "provider": "github",
+      "workload": "typescript-compiler",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 57.0,
+        "min": 55.0,
+        "max": 61.0
+      },
+      "queue_seconds": {
+        "median": 3.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 42.389341340000016,
+        "min": 39.999624348000005,
+        "max": 47.0376354
+      },
+      "setup_seconds": {
+        "median": 9.0,
+        "min": 8.0,
+        "max": 9.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 24.564522628000006,
+        "min": 23.879674772,
+        "max": 25.607345732000002
+      },
+      "dependency_seconds": {
+        "median": 3.791925678999988,
+        "min": 3.3474360110000063,
+        "max": 4.747273868000001
+      },
+      "compute_seconds": {
+        "median": 14.031301683999985,
+        "min": 12.771132205000008,
+        "max": 16.681616910999992
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "typescript-compiler",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 39.0,
+        "min": 32.0,
+        "max": 42.0
+      },
+      "queue_seconds": {
+        "median": 6.0,
+        "min": 5.0,
+        "max": 6.0
+      },
+      "workload_seconds": {
+        "median": 24.097232435000002,
+        "min": 18.997828523000003,
+        "max": 29.061695497000002
+      },
+      "setup_seconds": {
+        "median": 6.0,
+        "min": 6.0,
+        "max": 7.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 9.583613986999998,
+        "min": 8.508114114,
+        "max": 18.066096402000003
+      },
+      "dependency_seconds": {
+        "median": 2.083022060999994,
+        "min": 1.9860129939999993,
+        "max": 2.584371372000003
+      },
+      "compute_seconds": {
+        "median": 8.911787520000004,
+        "min": 8.502704300999998,
+        "max": 11.927750705999994
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "typescript-compiler",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 58.0,
+        "min": 56.0,
+        "max": 61.0
+      },
+      "queue_seconds": {
+        "median": 9.0,
+        "min": 8.0,
+        "max": 11.0
+      },
+      "workload_seconds": {
+        "median": 33.456466642,
+        "min": 32.48787453700061,
+        "max": 36.332650922
+      },
+      "setup_seconds": {
+        "median": 16.0,
+        "min": 13.0,
+        "max": 17.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 19.98349762599537,
+        "min": 19.455879843999995,
+        "max": 20.985759363
+      },
+      "dependency_seconds": {
+        "median": 2.634549523000004,
+        "min": 2.288301237000269,
+        "max": 3.7361888439999973
+      },
+      "compute_seconds": {
+        "median": 11.364626523000027,
+        "min": 10.214633456998854,
+        "max": 11.609332706000032
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "typescript-compiler",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 54.0,
+        "min": 51.0,
+        "max": 54.0
+      },
+      "queue_seconds": {
+        "median": 12.0,
+        "min": 4.0,
+        "max": 14.0
+      },
+      "workload_seconds": {
+        "median": 40.795361036,
+        "min": 38.195649032,
+        "max": 42.042037659
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 9.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 23.770090054000004,
+        "min": 22.645688376000003,
+        "max": 24.101015444000005
+      },
+      "dependency_seconds": {
+        "median": 4.488727673999996,
+        "min": 3.987086361000003,
+        "max": 4.4942626610000005
+      },
+      "compute_seconds": {
+        "median": 12.204025049000002,
+        "min": 11.561403614,
+        "max": 13.77567698299999
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "typescript-compiler",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 63.0,
+        "min": 56.0,
+        "max": 73.0
+      },
+      "queue_seconds": {
+        "median": 3.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 43.581046988000004,
+        "min": 40.297020255,
+        "max": 53.33788484
+      },
+      "setup_seconds": {
+        "median": 11.0,
+        "min": 9.0,
+        "max": 12.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 2.0
+      },
+      "source_seconds": {
+        "median": 19.505068944999998,
+        "min": 18.613851433000004,
+        "max": 28.536526981
+      },
+      "dependency_seconds": {
+        "median": 3.809759124000003,
+        "min": 3.3860420399999995,
+        "max": 3.9057008399999944
+      },
+      "compute_seconds": {
+        "median": 20.258203827999992,
+        "min": 18.295391956000003,
+        "max": 20.89396690799998
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "typescript-compiler",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 46.0,
+        "min": 41.0,
+        "max": 49.0
+      },
+      "queue_seconds": {
+        "median": 6.0,
+        "min": 6.0,
+        "max": 6.0
+      },
+      "workload_seconds": {
+        "median": 30.876504603999997,
+        "min": 27.809359124,
+        "max": 33.252113733
+      },
+      "setup_seconds": {
+        "median": 6.0,
+        "min": 6.0,
+        "max": 7.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 18.836551022000002,
+        "min": 18.032572344000002,
+        "max": 19.034724484999998
+      },
+      "dependency_seconds": {
+        "median": 1.8365621989999923,
+        "min": 1.2818587879999939,
+        "max": 1.8420376620000027
+      },
+      "compute_seconds": {
+        "median": 10.202367541999998,
+        "min": 8.493942100000005,
+        "max": 12.373375399999993
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "typescript-compiler",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 65.0,
+        "min": 62.0,
+        "max": 67.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 8.0,
+        "max": 9.0
+      },
+      "workload_seconds": {
+        "median": 31.37913484500001,
+        "min": 28.284616417000052,
+        "max": 31.795838212000007
+      },
+      "setup_seconds": {
+        "median": 13.0,
+        "min": 12.0,
+        "max": 13.0
+      },
+      "restore_seconds": {
+        "median": 13.0,
+        "min": 13.0,
+        "max": 13.0
+      },
+      "source_seconds": {
+        "median": 19.45324292799998,
+        "min": 17.73846426099999,
+        "max": 20.891707155000006
+      },
+      "dependency_seconds": {
+        "median": 1.591830157000004,
+        "min": 1.433156652000008,
+        "max": 1.7818590319999998
+      },
+      "compute_seconds": {
+        "median": 9.053031960999988,
+        "min": 8.95324768799992,
+        "max": 10.559304253999954
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "typescript-compiler",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 52.0,
+        "min": 49.0,
+        "max": 53.0
+      },
+      "queue_seconds": {
+        "median": 10.0,
+        "min": 1.0,
+        "max": 10.0
+      },
+      "workload_seconds": {
+        "median": 38.493238895000005,
+        "min": 37.148240353,
+        "max": 39.812857675000004
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 8.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 23.751066983999998,
+        "min": 23.404989559,
+        "max": 24.469085438999997
+      },
+      "dependency_seconds": {
+        "median": 3.4388662069999967,
+        "min": 3.1367133549999835,
+        "max": 3.537226005000001
+      },
+      "compute_seconds": {
+        "median": 11.301811244000007,
+        "min": 10.605125023,
+        "max": 11.804996127999999
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "rust-regex",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 38.0,
+        "min": 36.0,
+        "max": 40.0
+      },
+      "queue_seconds": {
+        "median": 2.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 18.89149783,
+        "min": 18.140080482000002,
+        "max": 19.736881917999995
+      },
+      "setup_seconds": {
+        "median": 12.0,
+        "min": 11.0,
+        "max": 13.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0.5310490619999939,
+        "min": 0.5116761350000019,
+        "max": 0.7040265340000005
+      },
+      "dependency_seconds": {
+        "median": 5.898856753000004,
+        "min": 5.335041984,
+        "max": 7.785848089000012
+      },
+      "compute_seconds": {
+        "median": 13.039655726,
+        "min": 9.819016472000015,
+        "max": 13.129956048000004
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "rust-regex",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 27.0,
+        "min": 23.0,
+        "max": 28.0
+      },
+      "queue_seconds": {
+        "median": 6.0,
+        "min": 5.0,
+        "max": 6.0
+      },
+      "workload_seconds": {
+        "median": 11.875881952999997,
+        "min": 9.138244071999999,
+        "max": 12.756626190000002
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 6.0,
+        "max": 8.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 1.3478357999999986,
+        "min": 1.3458270279999986,
+        "max": 1.4012206559999996
+      },
+      "dependency_seconds": {
+        "median": 2.920969925999998,
+        "min": 2.519102224000001,
+        "max": 3.6747381630000007
+      },
+      "compute_seconds": {
+        "median": 7.603082342,
+        "min": 5.270661891999996,
+        "max": 7.676209209
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "rust-regex",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 32.0,
+        "min": 30.0,
+        "max": 33.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 8.0,
+        "max": 9.0
+      },
+      "workload_seconds": {
+        "median": 10.264950196999962,
+        "min": 8.056613204999962,
+        "max": 10.727080055000044
+      },
+      "setup_seconds": {
+        "median": 13.0,
+        "min": 12.0,
+        "max": 13.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 1.1406915289999802,
+        "min": 1.1377714070000593,
+        "max": 1.1912576079998871
+      },
+      "dependency_seconds": {
+        "median": 2.3195934420000413,
+        "min": 1.2160693879999371,
+        "max": 3.7215074989999835
+      },
+      "compute_seconds": {
+        "median": 5.861141063000048,
+        "min": 5.699153604000003,
+        "max": 6.749828346999948
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "rust-regex",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 24.0,
+        "min": 23.0,
+        "max": 25.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 2.0,
+        "max": 10.0
+      },
+      "workload_seconds": {
+        "median": 11.146243789,
+        "min": 10.476294851999999,
+        "max": 11.180148012
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 8.0,
+        "max": 9.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0.3930336640000007,
+        "min": 0.3930133120000008,
+        "max": 0.4476458440000002
+      },
+      "dependency_seconds": {
+        "median": 3.6744340710000003,
+        "min": 3.4222537640000006,
+        "max": 3.723756067
+      },
+      "compute_seconds": {
+        "median": 6.972421481000001,
+        "min": 6.658649305000004,
+        "max": 7.110271951000001
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "rust-regex",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 29.0,
+        "min": 27.0,
+        "max": 36.0
+      },
+      "queue_seconds": {
+        "median": 3.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 10.848486304000005,
+        "min": 9.780717229,
+        "max": 15.092891675000004
+      },
+      "setup_seconds": {
+        "median": 10.0,
+        "min": 9.0,
+        "max": 10.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 3.0
+      },
+      "source_seconds": {
+        "median": 1.0641041340000044,
+        "min": 1.0047076860000033,
+        "max": 1.392199969
+      },
+      "dependency_seconds": {
+        "median": 0.06959649899999931,
+        "min": 0.06868340199999778,
+        "max": 0.1347339390000002
+      },
+      "compute_seconds": {
+        "median": 9.770305691999994,
+        "min": 8.314150250000004,
+        "max": 13.888628652999998
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "rust-regex",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 25.0,
+        "min": 20.0,
+        "max": 27.0
+      },
+      "queue_seconds": {
+        "median": 6.0,
+        "min": 6.0,
+        "max": 6.0
+      },
+      "workload_seconds": {
+        "median": 8.562381242,
+        "min": 6.510445649999999,
+        "max": 10.260902724999998
+      },
+      "setup_seconds": {
+        "median": 7.0,
+        "min": 6.0,
+        "max": 7.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 1.3536451659999997,
+        "min": 1.3438992790000004,
+        "max": 1.4018446040000008
+      },
+      "dependency_seconds": {
+        "median": 0.06469067999999822,
+        "min": 0.03174397799999973,
+        "max": 0.0648119230000006
+      },
+      "compute_seconds": {
+        "median": 7.140262000000003,
+        "min": 5.132063442,
+        "max": 8.789727611000004
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "rust-regex",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 39.0,
+        "min": 38.0,
+        "max": 74.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 8.0
+      },
+      "workload_seconds": {
+        "median": 7.211533244000009,
+        "min": 7.033851464999998,
+        "max": 19.011211873999997
+      },
+      "setup_seconds": {
+        "median": 12.0,
+        "min": 11.0,
+        "max": 41.0
+      },
+      "restore_seconds": {
+        "median": 11.0,
+        "min": 6.0,
+        "max": 11.0
+      },
+      "source_seconds": {
+        "median": 1.6913634299999956,
+        "min": 1.6408156950000148,
+        "max": 7.953171998000002
+      },
+      "dependency_seconds": {
+        "median": 0.06422115399999484,
+        "min": 0.031985673999997744,
+        "max": 1.9178732820000022
+      },
+      "compute_seconds": {
+        "median": 5.452228867000002,
+        "min": 5.357284391999997,
+        "max": 7.7733609369999925
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "rust-regex",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 20.0,
+        "min": 20.0,
+        "max": 20.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 1.0,
+        "max": 11.0
+      },
+      "workload_seconds": {
+        "median": 6.961857108,
+        "min": 6.863310311000003,
+        "max": 6.963058174999997
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 8.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 0.39173088700000136,
+        "min": 0.3913371870000013,
+        "max": 0.44169942199999923
+      },
+      "dependency_seconds": {
+        "median": 0.06405930000000026,
+        "min": 0.06399165199999857,
+        "max": 0.06406533100000189
+      },
+      "compute_seconds": {
+        "median": 6.503289575,
+        "min": 6.355001037000001,
+        "max": 6.504521541000003
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "rust-ripgrep",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 64.0,
+        "min": 58.0,
+        "max": 71.0
+      },
+      "queue_seconds": {
+        "median": 2.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 46.327298052,
+        "min": 41.11842136599995,
+        "max": 54.411721949000004
+      },
+      "setup_seconds": {
+        "median": 10.0,
+        "min": 9.0,
+        "max": 11.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 1.2529537629999936,
+        "min": 1.0110860130000034,
+        "max": 1.5285069890000038
+      },
+      "dependency_seconds": {
+        "median": 5.485566712000001,
+        "min": 4.479825634999997,
+        "max": 5.784567723000002
+      },
+      "compute_seconds": {
+        "median": 38.93318189200002,
+        "min": 35.31765118999999,
+        "max": 47.819162894
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "rust-ripgrep",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 36.0,
+        "min": 35.0,
+        "max": 44.0
+      },
+      "queue_seconds": {
+        "median": 6.0,
+        "min": 5.0,
+        "max": 6.0
+      },
+      "workload_seconds": {
+        "median": 22.511048580999997,
+        "min": 22.472131215999998,
+        "max": 29.283012759000002
+      },
+      "setup_seconds": {
+        "median": 7.0,
+        "min": 6.0,
+        "max": 7.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 1.2447557700000011,
+        "min": 1.2416131799999999,
+        "max": 1.2974444389999995
+      },
+      "dependency_seconds": {
+        "median": 2.368467216999999,
+        "min": 2.168204812999999,
+        "max": 2.720644311000001
+      },
+      "compute_seconds": {
+        "median": 19.021513458999998,
+        "min": 18.800013487,
+        "max": 25.243169316999996
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "rust-ripgrep",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 47.0,
+        "min": 43.0,
+        "max": 50.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 8.0,
+        "max": 8.0
+      },
+      "workload_seconds": {
+        "median": 24.264023022999936,
+        "min": 21.60644010300001,
+        "max": 27.292026868999983
+      },
+      "setup_seconds": {
+        "median": 13.0,
+        "min": 12.0,
+        "max": 14.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 1.4897134499999538,
+        "min": 1.1908095870001034,
+        "max": 1.592217551000033
+      },
+      "dependency_seconds": {
+        "median": 1.7170488340000247,
+        "min": 0.6651505950000001,
+        "max": 1.767827847000035
+      },
+      "compute_seconds": {
+        "median": 21.259464506999848,
+        "min": 19.406666400999995,
+        "max": 23.93022426400006
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "rust-ripgrep",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 37.0,
+        "min": 37.0,
+        "max": 38.0
+      },
+      "queue_seconds": {
+        "median": 10.0,
+        "min": 9.0,
+        "max": 10.0
+      },
+      "workload_seconds": {
+        "median": 25.077639355000002,
+        "min": 25.005771323,
+        "max": 25.561960338000002
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 8.0,
+        "max": 8.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0.5438345019999993,
+        "min": 0.49378090500000127,
+        "max": 0.5440484760000004
+      },
+      "dependency_seconds": {
+        "median": 3.071930975000001,
+        "min": 2.9710322080000005,
+        "max": 3.420758581000001
+      },
+      "compute_seconds": {
+        "median": 21.411419399,
+        "min": 21.000126396000002,
+        "max": 22.050870794999994
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "rust-ripgrep",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 67.0,
+        "min": 51.0,
+        "max": 69.0
+      },
+      "queue_seconds": {
+        "median": 3.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 48.662093641,
+        "min": 33.74206936399999,
+        "max": 50.382953173000004
+      },
+      "setup_seconds": {
+        "median": 10.0,
+        "min": 8.0,
+        "max": 11.0
+      },
+      "restore_seconds": {
+        "median": 2.0,
+        "min": 1.0,
+        "max": 2.0
+      },
+      "source_seconds": {
+        "median": 0.865276080000001,
+        "min": 0.7511426299999968,
+        "max": 1.2517573199999958
+      },
+      "dependency_seconds": {
+        "median": 0.11931032100000039,
+        "min": 0.06750451000000623,
+        "max": 0.12391207199999599
+      },
+      "compute_seconds": {
+        "median": 47.57446890900002,
+        "min": 32.357985535,
+        "max": 49.42043294499999
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "rust-ripgrep",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 34.0,
+        "min": 34.0,
+        "max": 34.0
+      },
+      "queue_seconds": {
+        "median": 5.0,
+        "min": 5.0,
+        "max": 6.0
+      },
+      "workload_seconds": {
+        "median": 20.237932209999997,
+        "min": 20.172226919,
+        "max": 20.328991185
+      },
+      "setup_seconds": {
+        "median": 7.0,
+        "min": 6.0,
+        "max": 7.0
+      },
+      "restore_seconds": {
+        "median": 0.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 1.241761897,
+        "min": 1.2416890989999985,
+        "max": 1.242543887
+      },
+      "dependency_seconds": {
+        "median": 0.06374087999999922,
+        "min": 0.031705768000000134,
+        "max": 0.06378820900000015
+      },
+      "compute_seconds": {
+        "median": 18.891380709000003,
+        "min": 18.825223184999995,
+        "max": 19.011871801000005
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "rust-ripgrep",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 52.0,
+        "min": 48.0,
+        "max": 54.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 8.0
+      },
+      "workload_seconds": {
+        "median": 22.829777894000017,
+        "min": 20.57030491399999,
+        "max": 23.133749852999983
+      },
+      "setup_seconds": {
+        "median": 13.0,
+        "min": 12.0,
+        "max": 17.0
+      },
+      "restore_seconds": {
+        "median": 7.0,
+        "min": 6.0,
+        "max": 8.0
+      },
+      "source_seconds": {
+        "median": 1.2955921410000428,
+        "min": 1.1908929189999924,
+        "max": 1.3919993670000395
+      },
+      "dependency_seconds": {
+        "median": 0.06427513000005547,
+        "min": 0.03190759900000728,
+        "max": 0.06429852100001199
+      },
+      "compute_seconds": {
+        "median": 21.417810863,
+        "min": 19.304710518999997,
+        "max": 21.628818597999953
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "rust-ripgrep",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 34.0,
+        "min": 34.0,
+        "max": 35.0
+      },
+      "queue_seconds": {
+        "median": 10.0,
+        "min": 1.0,
+        "max": 10.0
+      },
+      "workload_seconds": {
+        "median": 21.127445766,
+        "min": 20.920268567,
+        "max": 21.280352717
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 8.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 0.0,
+        "max": 2.0
+      },
+      "source_seconds": {
+        "median": 0.5421011030000003,
+        "min": 0.5409632850000001,
+        "max": 0.5423403570000005
+      },
+      "dependency_seconds": {
+        "median": 0.06420580099999995,
+        "min": 0.06404192599999803,
+        "max": 0.0659443799999977
+      },
+      "compute_seconds": {
+        "median": 20.477822583999995,
+        "min": 20.270670155999994,
+        "max": 20.632876484
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "python-jinja",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 20.0,
+        "min": 19.0,
+        "max": 23.0
+      },
+      "queue_seconds": {
+        "median": 2.0,
+        "min": 2.0,
+        "max": 2.0
+      },
+      "workload_seconds": {
+        "median": 3.947888332000005,
+        "min": 3.7974782430000005,
+        "max": 4.103686175
+      },
+      "setup_seconds": {
+        "median": 10.0,
+        "min": 10.0,
+        "max": 11.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0.741127555999995,
+        "min": 0.44709127600000187,
+        "max": 0.844829333000007
+      },
+      "dependency_seconds": {
+        "median": 0.522658387000007,
+        "min": 0.5193607249999985,
+        "max": 0.5710806769999976
+      },
+      "compute_seconds": {
+        "median": 2.583061653999991,
+        "min": 2.5330555569999973,
+        "max": 3.084786484999995
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "python-jinja",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 19.0,
+        "min": 16.0,
+        "max": 20.0
+      },
+      "queue_seconds": {
+        "median": 6.0,
+        "min": 5.0,
+        "max": 8.0
+      },
+      "workload_seconds": {
+        "median": 3.4462797609999996,
+        "min": 2.7820576080000006,
+        "max": 3.5393775860000005
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 8.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 1.0417002780000004,
+        "min": 1.0385544089999996,
+        "max": 1.0467438120000025
+      },
+      "dependency_seconds": {
+        "median": 0.36502491100000256,
+        "min": 0.2640486459999991,
+        "max": 0.41585142899999994
+      },
+      "compute_seconds": {
+        "median": 1.982899628000002,
+        "min": 1.4790986429999986,
+        "max": 2.131782272999999
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "python-jinja",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 25.0,
+        "min": 24.0,
+        "max": 56.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 9.0
+      },
+      "workload_seconds": {
+        "median": 2.9825280240000325,
+        "min": 2.881572945000002,
+        "max": 5.629703574000004
+      },
+      "setup_seconds": {
+        "median": 13.0,
+        "min": 12.0,
+        "max": 37.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 1.0870918219999908,
+        "min": 1.0865794039999983,
+        "max": 3.2829783299999917
+      },
+      "dependency_seconds": {
+        "median": 0.3646448230000061,
+        "min": 0.3145593099999999,
+        "max": 0.36473791000003075
+      },
+      "compute_seconds": {
+        "median": 1.5300353179999888,
+        "min": 1.4798880760000017,
+        "max": 1.9814452440000139
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "python-jinja",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 16.0,
+        "min": 14.0,
+        "max": 17.0
+      },
+      "queue_seconds": {
+        "median": 10.0,
+        "min": 1.0,
+        "max": 17.0
+      },
+      "workload_seconds": {
+        "median": 2.4362246469999995,
+        "min": 2.4348833600000006,
+        "max": 2.6888480729999955
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 9.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0.43889521000000187,
+        "min": 0.38997948199999755,
+        "max": 0.44268453500000504
+      },
+      "dependency_seconds": {
+        "median": 0.3645602700000019,
+        "min": 0.3645315310000008,
+        "max": 0.5149311349999977
+      },
+      "compute_seconds": {
+        "median": 1.6810343749999994,
+        "min": 1.6308674690000018,
+        "max": 1.7306472450000001
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "python-jinja",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 21.0,
+        "min": 21.0,
+        "max": 21.0
+      },
+      "queue_seconds": {
+        "median": 3.0,
+        "min": 3.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 4.149299432999982,
+        "min": 3.292345635,
+        "max": 4.152649125000011
+      },
+      "setup_seconds": {
+        "median": 10.0,
+        "min": 10.0,
+        "max": 10.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 0.6432344349999823,
+        "min": 0.5976567849999981,
+        "max": 1.042757984999998
+      },
+      "dependency_seconds": {
+        "median": 0.4702299390000064,
+        "min": 0.3186447010000002,
+        "max": 0.4702454819999957
+      },
+      "compute_seconds": {
+        "median": 3.03467093499998,
+        "min": 1.9304245719999997,
+        "max": 3.084114652000011
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "python-jinja",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 20.0,
+        "min": 17.0,
+        "max": 21.0
+      },
+      "queue_seconds": {
+        "median": 7.0,
+        "min": 5.0,
+        "max": 8.0
+      },
+      "workload_seconds": {
+        "median": 3.5582600289999995,
+        "min": 2.731973122000001,
+        "max": 3.643171727000002
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 6.0,
+        "max": 9.0
+      },
+      "restore_seconds": {
+        "median": 0.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 1.0415970530000003,
+        "min": 1.0382485399999997,
+        "max": 1.0591867300000004
+      },
+      "dependency_seconds": {
+        "median": 0.3149793289999998,
+        "min": 0.26401684599999875,
+        "max": 0.3650847559999981
+      },
+      "compute_seconds": {
+        "median": 2.133123805999997,
+        "min": 1.4293324400000031,
+        "max": 2.2853766319999984
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "python-jinja",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 28.0,
+        "min": 27.0,
+        "max": 81.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 14.0
+      },
+      "workload_seconds": {
+        "median": 2.9980157039999966,
+        "min": 2.9354897470000196,
+        "max": 3.332326199000022
+      },
+      "setup_seconds": {
+        "median": 13.0,
+        "min": 12.0,
+        "max": 16.0
+      },
+      "restore_seconds": {
+        "median": 3.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "source_seconds": {
+        "median": 1.2880002440000027,
+        "min": 1.0906997889999275,
+        "max": 1.4876873399999795
+      },
+      "dependency_seconds": {
+        "median": 0.26443385500000005,
+        "min": 0.21427099099997804,
+        "max": 0.2645336979999229
+      },
+      "compute_seconds": {
+        "median": 1.5797603580001578,
+        "min": 1.430079311,
+        "max": 1.6299461890000089
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "python-jinja",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 15.0,
+        "min": 15.0,
+        "max": 17.0
+      },
+      "queue_seconds": {
+        "median": 9.0,
+        "min": 9.0,
+        "max": 10.0
+      },
+      "workload_seconds": {
+        "median": 2.3841575690000028,
+        "min": 2.333431283000003,
+        "max": 2.4355486269999993
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 8.0,
+        "max": 9.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 0.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 0.4380289770000019,
+        "min": 0.3879467049999974,
+        "max": 0.43823623500000153
+      },
+      "dependency_seconds": {
+        "median": 0.26454061600000145,
+        "min": 0.26433783799999944,
+        "max": 0.26531608099999815
+      },
+      "compute_seconds": {
+        "median": 1.6808110999999961,
+        "min": 1.6303587999999998,
+        "max": 1.7816000219999957
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "python-pyperformance",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 42.0,
+        "min": 38.0,
+        "max": 42.0
+      },
+      "queue_seconds": {
+        "median": 2.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 22.13366051600002,
+        "min": 20.478861210999998,
+        "max": 24.045020050000005
+      },
+      "setup_seconds": {
+        "median": 11.0,
+        "min": 10.0,
+        "max": 12.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "dependency_seconds": {
+        "median": 0.3706653329999767,
+        "min": 0.27184965000000005,
+        "max": 0.6742347829999957
+      },
+      "compute_seconds": {
+        "median": 21.762426076999986,
+        "min": 20.206502458,
+        "max": 23.370293136999997
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "python-pyperformance",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 35.0,
+        "min": 29.0,
+        "max": 35.0
+      },
+      "queue_seconds": {
+        "median": 6.0,
+        "min": 5.0,
+        "max": 7.0
+      },
+      "workload_seconds": {
+        "median": 18.324907078,
+        "min": 15.458460922,
+        "max": 18.826789756000004
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 6.0,
+        "max": 8.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "dependency_seconds": {
+        "median": 0.21468026999999879,
+        "min": 0.16430119199999993,
+        "max": 0.2652460980000022
+      },
+      "compute_seconds": {
+        "median": 18.10952029,
+        "min": 15.29390474,
+        "max": 18.560824719
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "python-pyperformance",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 40.0,
+        "min": 39.0,
+        "max": 67.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 9.0
+      },
+      "workload_seconds": {
+        "median": 17.169173653,
+        "min": 14.95780994799999,
+        "max": 20.965702316000005
+      },
+      "setup_seconds": {
+        "median": 15.0,
+        "min": 13.0,
+        "max": 37.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "dependency_seconds": {
+        "median": 0.4147216730000025,
+        "min": 0.31437153400000284,
+        "max": 0.4154461080000118
+      },
+      "compute_seconds": {
+        "median": 16.75322080400001,
+        "min": 14.542575572000004,
+        "max": 20.650888111
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "python-pyperformance",
+      "cache": "cold",
+      "samples": 3,
+      "job_seconds": {
+        "median": 30.0,
+        "min": 30.0,
+        "max": 31.0
+      },
+      "queue_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 10.0
+      },
+      "workload_seconds": {
+        "median": 18.021934830000003,
+        "min": 16.012432479999998,
+        "max": 18.120586969
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 8.0,
+        "max": 10.0
+      },
+      "restore_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "source_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "dependency_seconds": {
+        "median": 0.41474475100000063,
+        "min": 0.26466236899999984,
+        "max": 0.41487413200000134
+      },
+      "compute_seconds": {
+        "median": 17.70534543,
+        "min": 15.597138285999996,
+        "max": 17.756651795000003
+      }
+    },
+    {
+      "provider": "github",
+      "workload": "python-pyperformance",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 38.0,
+        "min": 35.0,
+        "max": 40.0
+      },
+      "queue_seconds": {
+        "median": 3.0,
+        "min": 2.0,
+        "max": 3.0
+      },
+      "workload_seconds": {
+        "median": 18.625256092999997,
+        "min": 16.872619848999996,
+        "max": 20.175526692999995
+      },
+      "setup_seconds": {
+        "median": 10.0,
+        "min": 9.0,
+        "max": 11.0
+      },
+      "restore_seconds": {
+        "median": 2.0,
+        "min": 2.0,
+        "max": 2.0
+      },
+      "source_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "dependency_seconds": {
+        "median": 0.1195091239999968,
+        "min": 0.11882520500000027,
+        "max": 0.11979609899999843
+      },
+      "compute_seconds": {
+        "median": 18.504835788999998,
+        "min": 16.752368161,
+        "max": 20.056137246999995
+      }
+    },
+    {
+      "provider": "blacksmith",
+      "workload": "python-pyperformance",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 29.0,
+        "min": 28.0,
+        "max": 29.0
+      },
+      "queue_seconds": {
+        "median": 6.0,
+        "min": 6.0,
+        "max": 6.0
+      },
+      "workload_seconds": {
+        "median": 14.095594955,
+        "min": 13.65509571,
+        "max": 14.798433516000001
+      },
+      "setup_seconds": {
+        "median": 7.0,
+        "min": 6.0,
+        "max": 7.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "dependency_seconds": {
+        "median": 0.06395050599999941,
+        "min": 0.06386227499999997,
+        "max": 0.0645051720000005
+      },
+      "compute_seconds": {
+        "median": 14.031451260999999,
+        "min": 13.590332159,
+        "max": 14.734085761999998
+      }
+    },
+    {
+      "provider": "boat",
+      "workload": "python-pyperformance",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 41.0,
+        "min": 41.0,
+        "max": 46.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 8.0,
+        "max": 8.0
+      },
+      "workload_seconds": {
+        "median": 13.95009683500001,
+        "min": 13.549102293999965,
+        "max": 17.610215069000105
+      },
+      "setup_seconds": {
+        "median": 13.0,
+        "min": 12.0,
+        "max": 14.0
+      },
+      "restore_seconds": {
+        "median": 5.0,
+        "min": 5.0,
+        "max": 6.0
+      },
+      "source_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "dependency_seconds": {
+        "median": 0.06419447899997976,
+        "min": 0.06403971599996794,
+        "max": 0.06423021699998799
+      },
+      "compute_seconds": {
+        "median": 13.885762546000024,
+        "min": 13.484482387000014,
+        "max": 17.545594719000064
+      }
+    },
+    {
+      "provider": "namespace",
+      "workload": "python-pyperformance",
+      "cache": "warm",
+      "samples": 3,
+      "job_seconds": {
+        "median": 28.0,
+        "min": 28.0,
+        "max": 29.0
+      },
+      "queue_seconds": {
+        "median": 8.0,
+        "min": 2.0,
+        "max": 10.0
+      },
+      "workload_seconds": {
+        "median": 14.859448865999997,
+        "min": 14.854759083999998,
+        "max": 16.410768854
+      },
+      "setup_seconds": {
+        "median": 8.0,
+        "min": 7.0,
+        "max": 9.0
+      },
+      "restore_seconds": {
+        "median": 1.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "source_seconds": {
+        "median": 0,
+        "min": 0,
+        "max": 0
+      },
+      "dependency_seconds": {
+        "median": 0.06418134599999803,
+        "min": 0.06410220000000066,
+        "max": 0.06433213800000104
+      },
+      "compute_seconds": {
+        "median": 14.794719150000002,
+        "min": 14.790144774999998,
+        "max": 16.346007339
+      }
+    }
+  ],
+  "aggregate": {
+    "cold": {
+      "github": {
+        "sum_workload_job_medians_seconds": 221.0,
+        "geomean_job_speedup_vs_github": 1.0,
+        "geomean_compute_speedup_vs_github": 1.0
+      },
+      "blacksmith": {
+        "sum_workload_job_medians_seconds": 156.0,
+        "geomean_job_speedup_vs_github": 1.3580414918331438,
+        "geomean_compute_speedup_vs_github": 1.5396562198857524
+      },
+      "boat": {
+        "sum_workload_job_medians_seconds": 202.0,
+        "geomean_job_speedup_vs_github": 1.0594692993320705,
+        "geomean_compute_speedup_vs_github": 1.6163199271815956
+      },
+      "namespace": {
+        "sum_workload_job_medians_seconds": 161.0,
+        "geomean_job_speedup_vs_github": 1.3829737912605398,
+        "geomean_compute_speedup_vs_github": 1.4916350427762624
+      }
+    },
+    "warm": {
+      "github": {
+        "sum_workload_job_medians_seconds": 218.0,
+        "geomean_job_speedup_vs_github": 1.0,
+        "geomean_compute_speedup_vs_github": 1.0
+      },
+      "blacksmith": {
+        "sum_workload_job_medians_seconds": 154.0,
+        "geomean_job_speedup_vs_github": 1.3391903095676532,
+        "geomean_compute_speedup_vs_github": 1.6660824208694316
+      },
+      "boat": {
+        "sum_workload_job_medians_seconds": 225.0,
+        "geomean_job_speedup_vs_github": 0.9161753635996371,
+        "geomean_compute_speedup_vs_github": 1.8689390756989057
+      },
+      "namespace": {
+        "sum_workload_job_medians_seconds": 149.0,
+        "geomean_job_speedup_vs_github": 1.4575079722486675,
+        "geomean_compute_speedup_vs_github": 1.6983135139453118
+      }
+    }
+  },
+  "spent_seconds_including_pilot": {
+    "github": 1618.0,
+    "blacksmith": 1122.0,
+    "boat": 1716.0,
+    "namespace": 1108.0
+  },
+  "monthly_minute_costs": [
+    {
+      "runner_minutes": 1000,
+      "github_public_usd": 0,
+      "github_paid_4cpu_list_usd": 12.0,
+      "blacksmith_4cpu_before_free_credit_usd": 8.0,
+      "boat_4cpu_one_seat_base_usd": 20,
+      "namespace_4cpu16gb_payg_usd": 12.0,
+      "namespace_lowest_list_plan": {
+        "plan": "Developer",
+        "usd": 12.0
+      }
+    },
+    {
+      "runner_minutes": 5000,
+      "github_public_usd": 0,
+      "github_paid_4cpu_list_usd": 60.0,
+      "blacksmith_4cpu_before_free_credit_usd": 40.0,
+      "boat_4cpu_one_seat_base_usd": 20,
+      "namespace_4cpu16gb_payg_usd": 60.0,
+      "namespace_lowest_list_plan": {
+        "plan": "Developer",
+        "usd": 60.0
+      }
+    },
+    {
+      "runner_minutes": 10000,
+      "github_public_usd": 0,
+      "github_paid_4cpu_list_usd": 120.0,
+      "blacksmith_4cpu_before_free_credit_usd": 80.0,
+      "boat_4cpu_one_seat_base_usd": 20,
+      "namespace_4cpu16gb_payg_usd": 120.0,
+      "namespace_lowest_list_plan": {
+        "plan": "Team",
+        "usd": 100.0
+      }
+    },
+    {
+      "runner_minutes": 50000,
+      "github_public_usd": 0,
+      "github_paid_4cpu_list_usd": 600.0,
+      "blacksmith_4cpu_before_free_credit_usd": 400.0,
+      "boat_4cpu_one_seat_base_usd": 29.999999999999996,
+      "namespace_4cpu16gb_payg_usd": 600.0,
+      "namespace_lowest_list_plan": {
+        "plan": "Business",
+        "usd": 475.0
+      }
+    }
+  ],
+  "equal_work_costs": [
+    {
+      "provider": "github",
+      "five_job_suites": 1000,
+      "job_execution_minutes": 3633.3333333333335,
+      "github_paid_list_rounded_usd": 84.0,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "blacksmith",
+      "five_job_suites": 1000,
+      "job_execution_minutes": 2566.6666666666665,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": 20.53333333333333,
+      "blacksmith_rounded_gross_usd": 40.0,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "boat",
+      "five_job_suites": 1000,
+      "job_execution_minutes": 3750.0,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": 20,
+      "boat_starts": 5000,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "namespace",
+      "five_job_suites": 1000,
+      "job_execution_minutes": 2483.3333333333335,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": 29.8,
+      "namespace_ceil_minute_payg_usd": 60.0,
+      "namespace_ceil_minute_lowest_plan": {
+        "plan": "Developer",
+        "usd": 60.0
+      }
+    },
+    {
+      "provider": "github",
+      "five_job_suites": 5000,
+      "job_execution_minutes": 18166.666666666668,
+      "github_paid_list_rounded_usd": 420.0,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "blacksmith",
+      "five_job_suites": 5000,
+      "job_execution_minutes": 12833.333333333334,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": 102.66666666666667,
+      "blacksmith_rounded_gross_usd": 200.0,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "boat",
+      "five_job_suites": 5000,
+      "job_execution_minutes": 18750.0,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": 20,
+      "boat_starts": 25000,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "namespace",
+      "five_job_suites": 5000,
+      "job_execution_minutes": 12416.666666666666,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": 149.0,
+      "namespace_ceil_minute_payg_usd": 300.0,
+      "namespace_ceil_minute_lowest_plan": {
+        "plan": "Team",
+        "usd": 250.0
+      }
+    },
+    {
+      "provider": "github",
+      "five_job_suites": 10000,
+      "job_execution_minutes": 36333.333333333336,
+      "github_paid_list_rounded_usd": 840.0,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "blacksmith",
+      "five_job_suites": 10000,
+      "job_execution_minutes": 25666.666666666668,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": 205.33333333333334,
+      "blacksmith_rounded_gross_usd": 400.0,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "boat",
+      "five_job_suites": 10000,
+      "job_execution_minutes": 37500.0,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": 25.9728,
+      "boat_starts": 50000,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "namespace",
+      "five_job_suites": 10000,
+      "job_execution_minutes": 24833.333333333332,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": 298.0,
+      "namespace_ceil_minute_payg_usd": 600.0,
+      "namespace_ceil_minute_lowest_plan": {
+        "plan": "Business",
+        "usd": 475.0
+      }
+    },
+    {
+      "provider": "github",
+      "five_job_suites": 50000,
+      "job_execution_minutes": 181666.66666666666,
+      "github_paid_list_rounded_usd": 4200.0,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "blacksmith",
+      "five_job_suites": 50000,
+      "job_execution_minutes": 128333.33333333333,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": 1026.6666666666667,
+      "blacksmith_rounded_gross_usd": 2000.0,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "boat",
+      "five_job_suites": 50000,
+      "job_execution_minutes": 187500.0,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": 129.864,
+      "boat_starts": 250000,
+      "namespace_payg_seconds_only_usd": null,
+      "namespace_ceil_minute_payg_usd": null,
+      "namespace_ceil_minute_lowest_plan": null
+    },
+    {
+      "provider": "namespace",
+      "five_job_suites": 50000,
+      "job_execution_minutes": 124166.66666666667,
+      "github_paid_list_rounded_usd": null,
+      "blacksmith_unrounded_gross_usd": null,
+      "blacksmith_rounded_gross_usd": null,
+      "boat_measured_vm_base_usd": null,
+      "boat_starts": null,
+      "namespace_payg_seconds_only_usd": 1490.0,
+      "namespace_ceil_minute_payg_usd": 3000.0,
+      "namespace_ceil_minute_lowest_plan": {
+        "plan": "Business",
+        "usd": 2875.0
+      }
+    }
+  ],
+  "runtime": [
+    {
+      "provider": "blacksmith",
+      "cache": "cold",
+      "sample": 0,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004249393203125007,
+        "min": 0.0040410054062499645,
+        "max": 0.00516845693750001
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "cold",
+      "sample": 0,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.010226332468749932,
+        "min": 0.009789541499999999,
+        "max": 0.01277610956249986
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "cold",
+      "sample": 1,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.0041063966875000135,
+        "min": 0.003990166375000048,
+        "max": 0.004604624218750075
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "cold",
+      "sample": 1,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.010354985062499988,
+        "min": 0.009523684937499999,
+        "max": 0.012498114125000015
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "cold",
+      "sample": 2,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.0041715062656250135,
+        "min": 0.0040570768125000045,
+        "max": 0.005050178124999971
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "cold",
+      "sample": 2,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.010188276374999972,
+        "min": 0.00988244087500001,
+        "max": 0.011248139999999962
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "cold",
+      "sample": 3,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.003925655046874976,
+        "min": 0.003815124812500015,
+        "max": 0.004123643749999961
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "cold",
+      "sample": 3,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009843080281250027,
+        "min": 0.009723893749999934,
+        "max": 0.010186069875000037
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "warm",
+      "sample": 1,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.00408969707812501,
+        "min": 0.0040037936250000294,
+        "max": 0.00414801865625003
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "warm",
+      "sample": 1,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009709548468750051,
+        "min": 0.009563192562499934,
+        "max": 0.0098489839375
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "warm",
+      "sample": 2,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004000617234375059,
+        "min": 0.003924913531250018,
+        "max": 0.004168947968750003
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "warm",
+      "sample": 2,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009594678124999922,
+        "min": 0.00938817793750002,
+        "max": 0.012793486187500092
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "warm",
+      "sample": 3,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.0036982095000000492,
+        "min": 0.0036269582187500315,
+        "max": 0.003916931031250015
+      },
+      "values": 20
+    },
+    {
+      "provider": "blacksmith",
+      "cache": "warm",
+      "sample": 3,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009427786843750008,
+        "min": 0.009280636124999964,
+        "max": 0.009571346625000032
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "cold",
+      "sample": 0,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004356350078125182,
+        "min": 0.004101815843749357,
+        "max": 0.004563174437500095
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "cold",
+      "sample": 0,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.01031802906249979,
+        "min": 0.0100323108125,
+        "max": 0.011453864375001288
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "cold",
+      "sample": 1,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.003837802749999897,
+        "min": 0.0037482708437499568,
+        "max": 0.003956944843749977
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "cold",
+      "sample": 1,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009168276437500289,
+        "min": 0.008895698687499731,
+        "max": 0.010809105312500122
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "cold",
+      "sample": 2,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.003853864578125199,
+        "min": 0.003774265062499893,
+        "max": 0.004083085124999997
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "cold",
+      "sample": 2,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009133458687499818,
+        "min": 0.008933133500000245,
+        "max": 0.00977203649999936
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "cold",
+      "sample": 3,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004407343843750189,
+        "min": 0.0042687825312501815,
+        "max": 0.004949810624999884
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "cold",
+      "sample": 3,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.010735433781250414,
+        "min": 0.009920018624999472,
+        "max": 0.01175157156249984
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "warm",
+      "sample": 1,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.0038330117500002814,
+        "min": 0.003742606031249096,
+        "max": 0.0038978811875001185
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "warm",
+      "sample": 1,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.008957485156251721,
+        "min": 0.008850387562500117,
+        "max": 0.009159262687497005
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "warm",
+      "sample": 2,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004875561937499384,
+        "min": 0.004739698656244684,
+        "max": 0.005086569843747668
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "warm",
+      "sample": 2,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.011418351843751395,
+        "min": 0.01111436881249972,
+        "max": 0.012207616687504697
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "warm",
+      "sample": 3,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.003832071296875128,
+        "min": 0.003769517593751104,
+        "max": 0.003932131906250191
+      },
+      "values": 20
+    },
+    {
+      "provider": "boat",
+      "cache": "warm",
+      "sample": 3,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.008965758437501137,
+        "min": 0.00882414181250013,
+        "max": 0.009209594125000109
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "cold",
+      "sample": 0,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.007229783437500359,
+        "min": 0.007161565624999255,
+        "max": 0.007863426562501274
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "cold",
+      "sample": 0,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.01833247706250063,
+        "min": 0.01806038000000143,
+        "max": 0.01850074374999977
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "cold",
+      "sample": 1,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.006496314125000069,
+        "min": 0.006438573812499904,
+        "max": 0.007566724812499981
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "cold",
+      "sample": 1,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.016819102687500198,
+        "min": 0.01617668924999993,
+        "max": 0.017657863249999295
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "cold",
+      "sample": 2,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.007365888406248189,
+        "min": 0.007227181874998934,
+        "max": 0.00792138150000099
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "cold",
+      "sample": 2,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.018670970812500798,
+        "min": 0.018555667625001604,
+        "max": 0.018986726625001893
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "cold",
+      "sample": 3,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.007103716937499893,
+        "min": 0.007022012374999775,
+        "max": 0.007307633062500152
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "cold",
+      "sample": 3,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.01827874068750024,
+        "min": 0.01812694362500089,
+        "max": 0.018407464999999235
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "warm",
+      "sample": 1,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.008301425499999793,
+        "min": 0.008237084374999704,
+        "max": 0.008631552562500033
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "warm",
+      "sample": 1,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.01840960456250018,
+        "min": 0.018334114625000453,
+        "max": 0.01931996087499943
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "warm",
+      "sample": 2,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.008655619781249957,
+        "min": 0.008459834499999985,
+        "max": 0.008936029812499857
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "warm",
+      "sample": 2,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.021812266874999597,
+        "min": 0.021350504624999544,
+        "max": 0.022230829000000618
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "warm",
+      "sample": 3,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.006503777968750235,
+        "min": 0.006408065000000018,
+        "max": 0.0066458820625001636
+      },
+      "values": 20
+    },
+    {
+      "provider": "github",
+      "cache": "warm",
+      "sample": 3,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.016675481687499882,
+        "min": 0.01633626812500033,
+        "max": 0.017832185749999674
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "cold",
+      "sample": 0,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004176613171874344,
+        "min": 0.004089185625000269,
+        "max": 0.004630540937499816
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "cold",
+      "sample": 0,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009242129218749895,
+        "min": 0.009071961937500816,
+        "max": 0.009668851499998965
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "cold",
+      "sample": 1,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004155243140625042,
+        "min": 0.004057218281249941,
+        "max": 0.004625701593749976
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "cold",
+      "sample": 1,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009163439312499966,
+        "min": 0.008703289000000058,
+        "max": 0.010186087062499904
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "cold",
+      "sample": 2,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004138097953125031,
+        "min": 0.004015407531250181,
+        "max": 0.004762490718750012
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "cold",
+      "sample": 2,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.009204405218749878,
+        "min": 0.00893651300000009,
+        "max": 0.009835880937499653
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "cold",
+      "sample": 3,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.003978978750000028,
+        "min": 0.003923219843749992,
+        "max": 0.004814220781249934
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "cold",
+      "sample": 3,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.00864829068750006,
+        "min": 0.008580827312500094,
+        "max": 0.009395925812500039
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "warm",
+      "sample": 1,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.003935696671874989,
+        "min": 0.0038865317499999774,
+        "max": 0.004120682624999983
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "warm",
+      "sample": 1,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.008789061812500054,
+        "min": 0.008603250187500189,
+        "max": 0.009603449624999927
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "warm",
+      "sample": 2,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.004141409593750034,
+        "min": 0.004011748593750086,
+        "max": 0.0045056277187500715
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "warm",
+      "sample": 2,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.00966254893749996,
+        "min": 0.009223783624999982,
+        "max": 0.011368588999999929
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "warm",
+      "sample": 3,
+      "benchmark": "json_dumps",
+      "seconds_per_operation": {
+        "median": 0.0039059826562499733,
+        "min": 0.0038458222187499613,
+        "max": 0.003962774187500018
+      },
+      "values": 20
+    },
+    {
+      "provider": "namespace",
+      "cache": "warm",
+      "sample": 3,
+      "benchmark": "regex_v8",
+      "seconds_per_operation": {
+        "median": 0.008697525624999924,
+        "min": 0.008503096062500104,
+        "max": 0.009049064812500118
+      },
+      "values": 20
+    }
+  ],
+  "boat_reported_total_vm_cost_usd": 0.01911333
+}

@@ -1,16 +1,55 @@
 """Summarize the fixed benchmark matrix without mixing seeds into measurements."""
 
 import argparse
+import ast
 import csv
 import json
 import math
 import re
 import statistics
+import subprocess
 from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PROVIDERS = ["github", "blacksmith", "boat"]
+PROVIDERS = ["github", "blacksmith", "boat", "namespace"]
+
+
+def namespace_monthly(minutes):
+    """4 CPU / 16 GB is eight Linux unit-minutes per billed machine minute."""
+    options = [
+        {"plan": "Developer", "usd": minutes * 0.012},
+        {"plan": "Team", "usd": 100 + max(0, minutes * 8 - 100000) * 0.0015},
+        {"plan": "Business", "usd": 250 + max(0, minutes * 8 - 250000) * 0.0015},
+    ]
+    return min(options, key=lambda row: row["usd"])
+
+
+def harness_contract(commit):
+    source = subprocess.check_output(
+        ["git", "show", f"{commit}:scripts/bench.py"], cwd=ROOT, text=True
+    )
+    tree = ast.parse(source)
+    imports = sorted(
+        ast.dump(node, include_attributes=False)
+        for node in tree.body
+        if isinstance(node, (ast.Import, ast.ImportFrom))
+    )
+    # Documentation and import ordering do not affect measured commands.
+    tree.body = [
+        node
+        for node in tree.body
+        if not isinstance(node, (ast.Import, ast.ImportFrom))
+        and not (
+            isinstance(node, ast.Expr)
+            and isinstance(node.value, ast.Constant)
+            and isinstance(node.value.value, str)
+        )
+    ]
+    workflow = subprocess.check_output(
+        ["git", "show", f"{commit}:.github/workflows/workload.yml"], cwd=ROOT, text=True
+    )
+    return tuple(imports), ast.dump(tree, include_attributes=False), workflow
 
 
 def seconds(start, end):
@@ -29,18 +68,52 @@ def stats(values):
     return {"median": statistics.median(values), "min": min(values), "max": max(values)}
 
 
-def analyze(run_id):
-    destination = ROOT / "results" / str(run_id)
-    evidence = json.loads((destination / "evidence.json").read_text())
+def analyze(run_ids):
+    destination = (
+        ROOT / "results" / (str(run_ids[0]) if len(run_ids) == 1 else "comparison")
+    )
+    destination.mkdir(parents=True, exist_ok=True)
+    inputs = [
+        json.loads((ROOT / "results" / str(run_id) / "evidence.json").read_text())
+        for run_id in run_ids
+    ]
+    if len({harness_contract(item["run"]["head_sha"]) for item in inputs}) != 1:
+        raise RuntimeError("Measured harness behavior differs across runs")
+    evidence = {
+        "runs": [item["run"] for item in inputs],
+        "jobs": [job for item in inputs for job in item["jobs"]],
+        "reports": [
+            {**report, "run_id": item["run"]["id"]}
+            for item in inputs
+            for report in item["reports"]
+        ],
+        "pyperformance": [
+            artifact for item in inputs for artifact in item["pyperformance"]
+        ],
+    }
     workloads = list(json.loads((ROOT / "workloads.json").read_text())["workloads"])
     reports = evidence["reports"]
-    boat_usage = json.loads((destination / "boat-usage.json").read_text())
+    providers = [
+        provider
+        for provider in PROVIDERS
+        if any(report["provider"] == provider for report in reports)
+    ]
+    boat_usage = [
+        job
+        for run_id, item in zip(run_ids, inputs, strict=True)
+        if any(report["provider"] == "boat" for report in item["reports"])
+        for job in json.loads(
+            (ROOT / "results" / str(run_id) / "boat-usage.json").read_text()
+        )
+    ]
     boat_by_job = {int(job["id"]): job for job in boat_usage}
-    if len(boat_by_job) != 35 or any(job["state"] != "success" for job in boat_usage):
+    if "boat" in providers and (
+        len(boat_by_job) != 35 or any(job["state"] != "success" for job in boat_usage)
+    ):
         raise RuntimeError("Boat billing evidence must include all 35 successful jobs")
     expected = {
         (provider, workload, profile, sample)
-        for provider in PROVIDERS
+        for provider in providers
         for workload in workloads
         for profile, samples in [("cold", [0, 1, 2, 3]), ("warm", [1, 2, 3])]
         for sample in samples
@@ -48,14 +121,28 @@ def analyze(run_id):
     actual = [(r["provider"], r["workload"], r["cache"], r["sample"]) for r in reports]
     if len(actual) != len(expected) or set(actual) != expected:
         raise RuntimeError(
-            "Evidence must contain exactly the complete 105-job workload matrix"
+            "Evidence must contain exactly 35 workload jobs per selected provider"
         )
-    if evidence["run"]["conclusion"] != "success" or not all(
+    if any(run["conclusion"] != "success" for run in evidence["runs"]) or not all(
         r["passed"] for r in reports
     ):
         raise RuntimeError(
             "Resolve or explicitly analyze failures before publishing a success report"
         )
+    for workload in workloads:
+        if (
+            len(
+                {
+                    json.dumps(report["identity"], sort_keys=True)
+                    for report in reports
+                    if report["workload"] == workload
+                }
+            )
+            != 1
+        ):
+            raise RuntimeError("Source/configuration identity differs across providers")
+    if len({r["environment"]["python"] for r in reports}) != 1:
+        raise RuntimeError("Python versions differ across samples")
     if (
         len({json.dumps(r["environment"]["tools"], sort_keys=True) for r in reports})
         != 1
@@ -66,7 +153,7 @@ def analyze(run_id):
     jobs = {}
     for job in evidence["jobs"]:
         match = re.search(
-            r" / (github|blacksmith|boat) / ([\w-]+) / (cold|warm) / (\d+)$",
+            r" / (github|blacksmith|boat|namespace) / ([\w-]+) / (cold|warm) / (\d+)$",
             job["name"],
         )
         if match:
@@ -95,6 +182,7 @@ def analyze(run_id):
             "sample": key[3],
             "seed": report["seed"],
             "job_id": job["id"],
+            "run_id": report["run_id"],
             "job_url": job["html_url"],
             "job_seconds": seconds(job["started_at"], job["completed_at"]),
             "queue_seconds": seconds(job["created_at"], job["started_at"]),
@@ -146,7 +234,7 @@ def analyze(run_id):
     ]
     for workload in workloads:
         for profile in ["cold", "warm"]:
-            for provider in PROVIDERS:
+            for provider in providers:
                 selected = [
                     r
                     for r in measured
@@ -168,12 +256,15 @@ def analyze(run_id):
     pilot = json.loads((ROOT / "results/pilot.json").read_text())[
         "spent_job_seconds_per_provider"
     ]
+    pilot["namespace"] = json.loads(
+        (ROOT / "results/namespace-readiness/run.json").read_text()
+    )["execution_seconds"]
     spent = {
         provider: pilot[provider]
         + sum(r["job_seconds"] for r in rows if r["provider"] == provider)
-        for provider in PROVIDERS
+        for provider in providers
     }
-    spent["github"] += sum(
+    spent["github"] = spent.get("github", 0) + sum(
         seconds(j["started_at"], j["completed_at"])
         for j in evidence["jobs"]
         if j["name"] == "plan"
@@ -192,7 +283,7 @@ def analyze(run_id):
     aggregate = {}
     for profile in ["cold", "warm"]:
         aggregate[profile] = {}
-        for provider in PROVIDERS:
+        for provider in providers:
             aggregate[profile][provider] = {
                 "sum_workload_job_medians_seconds": sum(
                     median(provider, w, profile) for w in workloads
@@ -200,15 +291,19 @@ def analyze(run_id):
                 "geomean_job_speedup_vs_github": statistics.geometric_mean(
                     median("github", w, profile) / median(provider, w, profile)
                     for w in workloads
-                ),
+                )
+                if "github" in providers
+                else None,
                 "geomean_compute_speedup_vs_github": statistics.geometric_mean(
                     median("github", w, profile, "compute_seconds")
                     / median(provider, w, profile, "compute_seconds")
                     for w in workloads
-                ),
+                )
+                if "github" in providers
+                else None,
             }
     hardware = {}
-    for provider in PROVIDERS:
+    for provider in providers:
         selected = [r for r in reports if r["provider"] == provider]
         hardware[provider] = {
             "cpu_models": sorted(
@@ -239,13 +334,15 @@ def analyze(run_id):
             "github_paid_4cpu_list_usd": m * 0.012,
             "blacksmith_4cpu_before_free_credit_usd": m * 0.008,
             "boat_4cpu_one_seat_base_usd": max(20, m * 0.0006),
+            "namespace_4cpu16gb_payg_usd": m * 0.012,
+            "namespace_lowest_list_plan": namespace_monthly(m),
         }
         for m in [1000, 5000, 10000, 50000]
     ]
     equal_work = []
     for count in [1000, 5000, 10000, 50000]:
         # One suite is five separate fresh-runner jobs, one per workload, warm dependencies.
-        for provider in PROVIDERS:
+        for provider in providers:
             durations = [median(provider, w, "warm") for w in workloads]
             minutes = count * sum(durations) / 60
             rounded = count * sum(math.ceil(s / 60) for s in durations)
@@ -280,12 +377,21 @@ def analyze(run_id):
                     if provider == "boat"
                     else None,
                     "boat_starts": count * 5 if provider == "boat" else None,
+                    "namespace_payg_seconds_only_usd": minutes * 0.012
+                    if provider == "namespace"
+                    else None,
+                    "namespace_ceil_minute_payg_usd": rounded * 0.012
+                    if provider == "namespace"
+                    else None,
+                    "namespace_ceil_minute_lowest_plan": namespace_monthly(rounded)
+                    if provider == "namespace"
+                    else None,
                 }
             )
     runtime = []
     for artifact in evidence["pyperformance"]:
         match = re.search(
-            r"bench-(github|blacksmith|boat)-python-pyperformance-(cold|warm)-(\d+)/",
+            r"bench-(github|blacksmith|boat|namespace)-python-pyperformance-(cold|warm)-(\d+)/",
             artifact["artifact"],
         )
         if not match:
@@ -306,7 +412,10 @@ def analyze(run_id):
                 }
             )
     summary = {
-        "run": evidence["run"],
+        "run": evidence["runs"][0],
+        "runs": evidence["runs"],
+        "providers": providers,
+        "harness_behavior_verified_equal": True,
         "hardware": hardware,
         "groups": groups,
         "aggregate": aggregate,
@@ -340,5 +449,5 @@ def analyze(run_id):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("run_id", type=int)
-    analyze(parser.parse_args().run_id)
+    parser.add_argument("run_ids", type=int, nargs="+")
+    analyze(parser.parse_args().run_ids)

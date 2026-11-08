@@ -1,23 +1,26 @@
 # CI runner bench
 
-Small, manually triggered CI experiments on GitHub-hosted, Blacksmith and Boat
+Small, manually triggered CI experiments on GitHub-hosted, Blacksmith, Boat and Namespace
 runners. This repository contains no application or production credentials.
 
-**The full benchmark is complete:** all 105 workload jobs passed, covering five
+**The four-provider benchmark is complete:** all 140 workload jobs passed, covering five
 workloads, cold/warm package caches and three repetitions on every provider.
 Read the [speed and monthly-cost report](REPORT.md), open the
 [interactive overview](reports/overview.html), or inspect the
-[raw evidence](results/42508215226/evidence.json).
+[combined summary](results/comparison/summary.json). Namespace was tested in a
+separate later run with matching sources, tools, workload commands and cache policy.
 
 ## First run
 
-The **Provider smoke** workflow runs one job per provider. It validates checkout,
+The **Provider smoke** workflow runs one job per original provider; **Namespace
+readiness** covers Namespace separately. They validate checkout,
 pinned Node/Python/Rust toolchains, small language programs, Docker and a byte-for-byte
 1 MiB cache save/restore. It uploads environment and check evidence as JSON.
 Smoke timings are capability checks, not performance rankings.
 
 The requested Linux tiers are GitHub Ubuntu 24.04, Blacksmith 4-vCPU Ubuntu 24.04
-and default Boat. CPU, memory and cgroup limits are recorded; equal labels are not
+and default Boat; Namespace uses Ubuntu 24.04 with four CPUs and 16 GB RAM.
+CPU, memory and cgroup limits are recorded; equal labels are not
 proof of equal hardware. No workload is scheduled automatically on push or PR.
 
 ## Budget
@@ -87,11 +90,12 @@ each workload job has a five-minute timeout. No benchmark starts on push or PR.
 ```sh
 gh workflow run benchmark.yml --repo aurentisio/ci-runner-bench --ref main \
   -f provider=all -f workload=all
-# After completion, use its run ID:
+# After completion, use its run ID for collection/analysis:
 python scripts/collect.py RUN_ID
 python scripts/analyze.py RUN_ID
-# Rebuild the reviewed report for this archived experiment:
-python scripts/publish.py 42508215226
+# Rebuild the combined four-provider report from the archived runs:
+python scripts/analyze.py 42508215226 42512395289
+python scripts/publish.py comparison
 ```
 
 The scripts preserve and validate per-stage timing, resource use, environment,
@@ -99,8 +103,8 @@ cache admission and Actions metadata. Provider-native archive caches retain only
 package dependencies. Incremental build outputs, VM snapshots and sticky disks
 are separate experiments. The run-specific Boat usage and cache audit were
 collected through its CLI and GitHub logs; `analyze.py` requires the Boat usage
-file before producing billing projections. The narrative report and overview
-contain findings specific to the first run and must be reviewed for any rerun.
+file before producing billing projections. The reviewed narrative and overview
+contain findings specific to these experiments and must be reviewed for any rerun.
 
 See [METHODOLOGY.md](METHODOLOGY.md) for metric definitions, limitations and budget
 accounting. [REPORT.md](REPORT.md) includes medians/ranges, cache effectiveness,
@@ -140,6 +144,8 @@ byte-verified 1 MiB archive-cache save/restore and artifact upload. The job used
 15 seconds of Actions execution. [Readiness evidence](results/namespace-readiness)
 is preserved separately from the original three-provider benchmark.
 
-This is a connectivity/capability check. Namespace has not yet run the full
-workload matrix, and these smoke timings do not establish a speed ranking.
-Namespace's native persistent cache volumes were not exercised by this check.
+This is a connectivity/capability check; its timings do not establish a speed
+ranking. The subsequent [full Namespace run](https://github.com/aurentisio/ci-runner-bench/actions/runs/42512395289)
+passed all 35 workload jobs and planning. Its 30 measured samples are included in
+the current ranking. Namespace's native persistent cache volumes were not enabled;
+the comparison uses matching dependency-only archive caching and clean builds.

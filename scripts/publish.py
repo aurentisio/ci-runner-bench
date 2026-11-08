@@ -6,8 +6,12 @@ import statistics
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PROVIDERS = ["github", "blacksmith", "boat"]
-LABELS = {"github": "GitHub", "blacksmith": "Blacksmith", "boat": "Boat"}
+LABELS = {
+    "github": "GitHub",
+    "blacksmith": "Blacksmith",
+    "boat": "Boat",
+    "namespace": "Namespace",
+}
 
 
 def boat_monthly(compute_dollars, starts):
@@ -33,14 +37,12 @@ def boat_monthly(compute_dollars, starts):
     return min(options, key=lambda x: x["total_usd"]) if options else None
 
 
-def publish(run_id):
-    if run_id != 42508215226:
-        raise ValueError(
-            "The reviewed narrative is specific to run 42508215226; analyze new runs and review the narrative before publishing"
-        )
-    path = ROOT / "results" / str(run_id)
+def publish(dataset):
+    path = ROOT / "results" / dataset
     summary = json.loads((path / "summary.json").read_text())
+    providers = summary["providers"]
     workloads = list(dict.fromkeys(g["workload"] for g in summary["groups"]))
+    runs = summary["runs"]
 
     def group(provider, workload, profile):
         return next(
@@ -50,168 +52,265 @@ def publish(run_id):
             == (provider, workload, profile)
         )
 
+    def total(provider, profile):
+        return summary["aggregate"][profile][provider][
+            "sum_workload_job_medians_seconds"
+        ]
+
     def money(value):
         return f"${value:,.2f}"
 
+    def table(headers, rows):
+        return [
+            "| " + " | ".join(headers) + " |",
+            "| " + " | ".join("---" for _ in headers) + " |",
+            *["| " + " | ".join(map(str, row)) + " |" for row in rows],
+        ]
+
+    ranking = sorted(providers, key=lambda provider: total(provider, "warm"))
+    winner = ranking[0]
+    cold_winner = min(providers, key=lambda provider: total(provider, "cold"))
+    less = (1 - total(winner, "warm") / total("github", "warm")) * 100
     lines = [
-        "# CI runner benchmark — 8 November 2026",
+        "# CI runner benchmark — four-provider ranking",
         "",
-        f"[Completed workflow]({summary['run']['html_url']}) · measured commit `{summary['run']['head_sha']}` · 105/105 workload jobs passed on the first attempt, plus the planning job. The workflow ran for about 15 minutes with six matrix jobs allowed at once.",
+        f"**{LABELS[winner]} narrowly leads the observed warm-cache total; {LABELS[cold_winner]} leads cold-cache totals.** The warm leader totals **{total(winner, 'warm'):.0f} seconds**, using the sum of five workload medians: **{less:.0f}% less job execution time than GitHub**. This is a serial five-job summary, not the actual parallel workflow duration.",
         "",
-        "**Blacksmith finished these short CI jobs fastest overall.** A serial warm-cache five-job suite, calculated by summing workload medians, took **154 seconds on Blacksmith, 218 seconds on GitHub, and 225 seconds on Boat**. Blacksmith used 29% less execution time than GitHub; Boat used 3% more. This is an equal-workload summary, not the parallel workflow critical path.",
+        "Namespace and Blacksmith are close: warm totals are 149 versus 154 seconds, while cold totals are 161 versus 156 seconds. A roughly 3% gap with three samples in separate runs is not evidence of a statistically established winner. Namespace leads Python and the Rust regex workload; Blacksmith leads TypeScript; warm ripgrep medians tie.",
         "",
-        "Boat often executed computation quickly, but tool setup and cache transfer erased that advantage at job level. Public GitHub runner compute is free. Boat has a very low VM rate but a paid plan minimum and start limits; Blacksmith is the strongest speed result here. These findings apply to the tested Linux tiers and workloads, not macOS, larger runners, Docker builds, or every private repository.",
+        f"All **{35 * len(providers)} workload jobs** passed: {5 * len(providers)} cache seeds and {30 * len(providers)} measured jobs. Each workload/provider/cache group has three fresh-runner samples. Seeds count toward execution budgets but not speed rankings.",
+        "",
+        "## Run provenance and comparison limits",
+        "",
+        "The original GitHub/Blacksmith/Boat run and the later Namespace run were executed separately on 8 November 2026. They are not a simultaneous race. The Namespace-only matrix could schedule six jobs on that provider at once; the original matrix shared six slots among three providers. Scheduling/host load and network conditions may differ. No workflow-elapsed throughput ranking is inferred.",
+        "",
+    ]
+    for run in runs:
+        lines += [
+            f"- [Run {run['id']}]({run['html_url']}): {run['created_at']} → {run['updated_at']}; commit `{run['head_sha']}`."
+        ]
+    lines += [
+        "",
+        "The analyzer verified equal workload-harness syntax (ignoring only module documentation and import ordering), identical reusable workload workflow, source/configuration identities, tool versions and four-CPU affinity across all inputs. Full commits differ because orchestration, documentation and provider support changed. The original [three-provider report](reports/initial-three-providers.md) and raw evidence remain available.",
+        "",
+        "This ranking uses **dependency-only archive caching and clean builds**. Namespace uses the same pinned `actions/cache` action and cache-content policy; its native persistent cache volumes, custom images and checkout caching are **not enabled**. Blacksmith automatically enables its transparent archive-cache backend. This establishes a matched baseline, not the maximum optimized performance of each provider.",
         "",
         "## Complete-job speed",
         "",
-        "Seconds, **median (minimum–maximum)** over three fresh runners per cell. Includes setup, cache transfer, source fetch, dependencies, build/tests and upload/cleanup. Lower is better. Seeds are excluded.",
+        "Seconds: **median (minimum–maximum)**, n=3. Includes setup, pinned tool installation, archive restore, source fetch, dependencies, builds/tests, upload and cleanup; excludes queueing. Lower is better.",
         "",
-        "| Workload | Cache | GitHub | Blacksmith | Boat |",
-        "| --- | --- | ---: | ---: | ---: |",
     ]
+    rows = []
     for workload in workloads:
         for profile in ["cold", "warm"]:
-            values = []
-            for provider in PROVIDERS:
-                data = group(provider, workload, profile)["job_seconds"]
-                values.append(
-                    f"**{data['median']:.0f}** ({data['min']:.0f}–{data['max']:.0f})"
-                )
-            lines.append(f"| {workload} | {profile} | " + " | ".join(values) + " |")
-    lines += [
-        "",
-        "| Serial sum of five job medians | GitHub | Blacksmith | Boat |",
-        "| --- | ---: | ---: | ---: |",
-    ]
-    for profile in ["cold", "warm"]:
-        lines.append(
-            f"| {profile} | "
-            + " | ".join(
-                f"{summary['aggregate'][profile][p]['sum_workload_job_medians_seconds']:.0f} s"
-                for p in PROVIDERS
+            values = [group(p, workload, profile)["job_seconds"] for p in providers]
+            rows.append(
+                [
+                    workload,
+                    profile,
+                    *[
+                        f"**{v['median']:.0f}** ({v['min']:.0f}–{v['max']:.0f})"
+                        for v in values
+                    ],
+                ]
             )
-            + " |"
-        )
+    lines += table(["Workload", "Cache", *[LABELS[p] for p in providers]], rows)
+    lines += ["", "### Serial suite totals", ""]
+    lines += table(
+        ["Cache", *[LABELS[p] for p in providers]],
+        [
+            [profile, *[f"{total(p, profile):.0f} s" for p in providers]]
+            for profile in ["cold", "warm"]
+        ],
+    )
     lines += [
         "",
-        "Across equally weighted workload ratios, the geometric-mean complete-job speedups versus GitHub were 1.36× Blacksmith / 1.06× Boat cold, and 1.34× Blacksmith / 0.92× Boat warm. These differ from the serial sum because every workload receives equal weight regardless of duration.",
+        "The warm suite order is "
+        + " → ".join(f"{LABELS[p]} ({total(p, 'warm'):.0f} s)" for p in ranking)
+        + ". Rankings describe these products and short workloads, not all CI or identical physical hardware.",
         "",
-        "## What the caches actually changed",
+        "### Geometric-mean speedups versus GitHub",
         "",
-        "All 45 warm samples restored a matching seed and passed. Representative exact-key cache hits, archive sizes and Blacksmith transparent-cache activation are preserved in [cache-audit.json](results/"
-        + str(run_id)
-        + "/cache-audit.json). The same package-cache policy and commands were used on every provider; no compiled outputs or virtual environments were retained.",
+        "Every workload has equal weight in this table. Ratios above 1× mean faster. These differ from serial totals, which give long jobs more weight.",
         "",
-        "| Provider | Workload | Cold dependency install | Warm dependency install | Warm restore |",
-        "| --- | --- | ---: | ---: | ---: |",
     ]
-    for provider in PROVIDERS:
-        for workload in workloads:
-            cold = group(provider, workload, "cold")
-            warm = group(provider, workload, "warm")
-            lines.append(
-                f"| {LABELS[provider]} | {workload} | {cold['dependency_seconds']['median']:.2f} s | {warm['dependency_seconds']['median']:.2f} s | {warm['restore_seconds']['median']:.0f} s |"
-            )
+    lines += table(
+        [
+            "Provider",
+            "Cold complete job",
+            "Warm complete job",
+            "Cold compute",
+            "Warm compute",
+        ],
+        [
+            [
+                LABELS[p],
+                *[
+                    f"{summary['aggregate'][profile][p][metric]:.2f}×"
+                    for metric in [
+                        "geomean_job_speedup_vs_github",
+                        "geomean_compute_speedup_vs_github",
+                    ]
+                    for profile in ["cold", "warm"]
+                ],
+            ]
+            for p in providers
+        ],
+    )
     lines += [
         "",
-        "The clearest cache benefit was Cargo: warm fetching fell to approximately 0.06–0.12 seconds. On Boat, however, Rust regex restored in a median 11 seconds, compared with only 2.32 seconds for cold fetching. TypeScript's roughly 52 MB archive took a median 13 seconds to restore on Boat, versus about 1 second on GitHub/Blacksmith. Fast npm/uv cold installation leaves little room to recover transfer overhead.",
+        "## Cache effectiveness",
         "",
-        "A warm sample taking longer overall does **not** establish that cached dependencies slowed its compilation. Different fresh hosts were assigned to repetitions, and source-fetch/network/runtime variance remains visible in the ranges. GitHub exposed six CPU model strings across the run; Boat exposed two. Compare cache transfer plus dependency time to diagnose caching, rather than attributing every cold/warm job difference to the cache.",
+        f"All **{15 * len(providers)} warm jobs** restored a successful matching seed and passed package-manager integrity checks. The cache contains only npm/Cargo/uv/pip package data; source, compiled outputs, target directories and virtual environments are recreated. Cold does not flush registry/CDN, host or provider infrastructure caches.",
         "",
-        "For these workloads, retain Blacksmith's native cache for Cargo and measure whether small Python/npm caches justify even its low restore overhead. On Boat, skip archive caching where transfer exceeds fresh installation; test snapshots or a persistent native cache separately before adopting them. Incremental Rust target caching could have a much larger benefit, but was intentionally excluded from the matched clean-build comparison. For longer CI jobs, setup overhead becomes a smaller proportion of the total.",
+        "Dependency installation and archive restore are separate below. Restore step timings have one-second resolution, so 0 s means below the timestamp resolution.",
         "",
-        "## Computation and Python runtime",
-        "",
-        "Compute-stage geometric-mean speedups against GitHub were 1.54× Blacksmith / 1.62× Boat cold, and 1.67× Blacksmith / 1.87× Boat warm. This excludes source fetch and dependency installation. It includes the pyperformance harness's process/environment overhead, so the raw runtime measurements below provide a separate view.",
-        "",
-        "| pyperformance operation | GitHub | Blacksmith | Boat |",
-        "| --- | ---: | ---: | ---: |",
     ]
-    for benchmark in ["json_dumps", "regex_v8"]:
-        values = [
-            statistics.median(
-                r["seconds_per_operation"]["median"]
-                for r in summary["runtime"]
-                if r["provider"] == p
-                and r["benchmark"] == benchmark
-                and r["sample"] > 0
-            )
-            * 1000
-            for p in PROVIDERS
-        ]
-        lines.append(
-            f"| {benchmark} | "
-            + " | ".join(f"{value:.2f} ms" for value in values)
-            + " |"
-        )
+    lines += table(
+        ["Provider", "Workload", "Cold install", "Warm install", "Warm restore"],
+        [
+            [
+                LABELS[p],
+                w,
+                f"{group(p, w, 'cold')['dependency_seconds']['median']:.2f} s",
+                f"{group(p, w, 'warm')['dependency_seconds']['median']:.2f} s",
+                f"{group(p, w, 'warm')['restore_seconds']['median']:.0f} s",
+            ]
+            for p in providers
+            for w in workloads
+        ],
+    )
     lines += [
         "",
-        "Runtime cells are medians of six measured job medians (cold and warm together), using pyperformance's short `--fast` mode. They are directional estimates; no p95, statistical-significance or publication-quality stability claims are made. Full worker/calibration values remain in the raw evidence.",
+        "In the original run, Boat's TypeScript archive (~52 MB) took a median 13 seconds to restore, while cold dependency installation took 2.63 seconds. Cargo's warm dependency fetch was much faster, but Boat's transfer often outweighed the saving. Small npm/uv caches also have little room to recover transfer overhead. A warmer job taking longer overall does not prove its cached dependencies slowed compilation: source-fetch, hardware and runtime variance remain visible in the ranges.",
         "",
-        "## Hardware and budget",
+        "Namespace's archive restores took a median 1 second for each workload. Cargo fetching fell to about 0.06 seconds warm, so the dependency saving exceeded the restore cost. TypeScript's combined dependency work was 4.49 seconds cold versus 3.44 seconds warm plus 1 second of restoration: little net gain. The one-second archive restore also exceeds the small Python dependency-install savings. These are archive-cache observations, not measurements of Namespace's persistent cache volumes.",
         "",
-        "| Provider | Exposed CPUs | Guest memory | Total execution including both pilot attempts |",
-        "| --- | ---: | ---: | ---: |",
+        "Prefer a cache when the dependency work it saves exceeds restoration cost. Native persistent cache volumes or snapshots could change that result, but require a separately labelled test. Incremental Rust target caching was excluded here to preserve clean builds. Namespace's native-volume advantage is therefore not established by this experiment.",
+        "",
+        "## Python runtime",
+        "",
+        "Milliseconds per operation: median of six measured job medians (cold and warm combined). pyperformance uses `--fast` for JSON/regex; these are directional estimates with worker/calibration evidence preserved, not stable publication-quality claims.",
+        "",
     ]
-    for p in PROVIDERS:
-        lines.append(
-            f"| {LABELS[p]} | 4 | {min(summary['hardware'][p]['memory_kib']) / 1024**2:.2f} GiB | {summary['spent_seconds_including_pilot'][p] / 60:.2f} min / 200 min |"
-        )
+    lines += table(
+        ["Operation", *[LABELS[p] for p in providers]],
+        [
+            [
+                benchmark,
+                *[
+                    f"{statistics.median(r['seconds_per_operation']['median'] for r in summary['runtime'] if r['provider'] == p and r['benchmark'] == benchmark and r['sample'] > 0) * 1000:.2f} ms"
+                    for p in providers
+                ],
+            ]
+            for benchmark in ["json_dumps", "regex_v8"]
+        ],
+    )
     lines += [
         "",
-        "GitHub hosts included AMD EPYC and Intel Xeon models. Blacksmith reported Intel Xeon or AMD EPYC; Boat reported Ryzen 9 9950X or Ryzen 7 9700X. These are provider product comparisons with different memory, kernels and host allocation, not an identical-CPU laboratory experiment. Every job used the same pinned Node/Python/Rust/uv versions and four-CPU affinity. Hardware/model details are preserved for every sample.",
+        "## Hardware and execution budget",
         "",
-        f"Boat's API reports **{money(summary['boat_reported_total_vm_cost_usd'])}** of VM usage for the 35 full-run jobs ({summary['boat_reported_total_vm_cost_usd'] * 100:.2f} cents), before applying plan credit. The API's usage value is not an additional monthly invoice; its billing boundary differs from Actions execution timestamps. No benchmark retries were needed. The earlier pilot's two artifact-upload failures count in the budget.",
+        "Each product exposed four CPUs. Boat has ~8 GB RAM; the others ~16 GB. CPU models, kernels and provider images vary. Three samples do not establish tail latency or statistical significance.",
         "",
-        "## Monthly runner-minute costs",
-        "",
-        "USD list-rate scenarios checked 8 November 2026. Each row means the same number of **billable provider minutes**, not the same amount of completed work. Paid GitHub is a 4-core larger-runner rate projection; that product was **not** benchmarked. The measured public standard 4-CPU GitHub tier is free. Private standard Linux is normally 2 CPUs, so its price/performance cannot be substituted into this 4-CPU comparison.",
-        "",
-        "| Billable min/month | GitHub public measured tier | GitHub paid 4-core gross | Blacksmith 4-vCPU gross | Boat default base, one seat |",
-        "| ---: | ---: | ---: | ---: | ---: |",
     ]
-    for row in summary["monthly_minute_costs"]:
-        lines.append(
-            f"| {row['runner_minutes']:,} | $0 | {money(row['github_paid_4cpu_list_usd'])} | {money(row['blacksmith_4cpu_before_free_credit_usd'])} | {money(row['boat_4cpu_one_seat_base_usd'])} |"
-        )
+    lines += table(
+        [
+            "Provider",
+            "Guest RAM",
+            "Observed CPU model strings",
+            "Execution incl. pilots/seeds",
+        ],
+        [
+            [
+                LABELS[p],
+                f"{min(summary['hardware'][p]['memory_kib']) / 1024**2:.2f} GiB",
+                "; ".join(summary["hardware"][p]["cpu_models"]),
+                f"{summary['spent_seconds_including_pilot'][p] / 60:.2f} / 200 min",
+            ]
+            for p in providers
+        ],
+    )
     lines += [
         "",
-        "GitHub paid uses $0.012/min and rounds each job up to a whole minute; Team/Enterprise membership is separate. Eligible larger-runner usage can draw from the account's included compute value. Team currently includes $18/month, shared with other eligible compute; subtract only what remains available. Public standard runners remain independently free. [Runner rates](https://docs.github.com/en/billing/reference/actions-runner-pricing), [allowances/storage](https://docs.github.com/en/billing/concepts/product-billing/github-actions).",
+        "GitHub's budget includes planning jobs from both runs and both original pilot attempts; Namespace includes its readiness run. No benchmark retries were needed. Boat reported "
+        + f"{summary['boat_reported_total_vm_cost_usd'] * 100:.2f} cents of VM usage for its 35 full-run jobs, covered by its existing plan credit. Provider VM billing boundaries differ from Actions execution timestamps; no account invoice was inferred.",
         "",
-        "Blacksmith's 4-vCPU Linux x64 selector lists $0.008/min. It advertises 3,000 free monthly minutes; the table deliberately shows **gross before that credit**, because the accessible first-party pricing page does not establish the normalization at 4 vCPUs or billing rounding. Its full documentation was inaccessible during this experiment. Do not subtract 3,000 raw 4-vCPU minutes without checking the account's allowance. [Blacksmith pricing](https://www.blacksmith.sh/pricing).",
+        "## Monthly cost at fixed billable minutes",
         "",
-        "Boat default is $0.036/hour ($0.0006/min), metered per second. A $20 one-seat plan returns its price as expiring VM credit: base = max($20, VM usage). Extra seats raise the minimum. Snapshots beyond the included count, extra starts and optional services are separate. [Boat pricing](https://docs.boat.dev/pricing).",
+        "USD list-rate scenarios, checked 8 November 2026. These rows fix **billable machine minutes**, not completed work. GitHub public standard compute is free. Paid GitHub is a hypothetical 4-core larger-runner rate projection: that product was not measured. Private standard Linux is normally 2 CPUs and cannot inherit these 4-CPU performance results.",
         "",
-        "### Boat's start limits materially change short-job costs",
-        "",
-        "The $20 plan includes 12/60/200 starts per minute/hour/day. Daily starts 201–300 cost $0.03 each, 301–400 $0.05, and 401–1,200 $0.07; the highest applicable minute/hour/day bracket applies. CI can instead wait for capacity. Extra starts are not enabled by this experiment. [Start limits](https://docs.boat.dev/limits#extra-starts).",
-        "",
-        "The following **planning scenarios** assume evenly spaced jobs over 30 days, no other account usage, and choosing the cheapest advertised plan plus required extra starts. They do not change your subscription and do not predict bursty workloads. Each duration includes the VM's entire billed lifetime.",
-        "",
-        "| VM minutes/month | If each job lasts 5 min | If each job lasts 1 min |",
-        "| ---: | ---: | ---: |",
     ]
-    start_scenarios = []
+    lines += table(
+        [
+            "Billable min/month",
+            "GitHub public",
+            "GitHub paid 4-core gross",
+            "Blacksmith gross",
+            "Boat one-seat base",
+            "Namespace 4×16 PAYG",
+            "Namespace lowest listed plan",
+        ],
+        [
+            [
+                f"{r['runner_minutes']:,}",
+                "$0",
+                money(r["github_paid_4cpu_list_usd"]),
+                money(r["blacksmith_4cpu_before_free_credit_usd"]),
+                money(r["boat_4cpu_one_seat_base_usd"]),
+                money(r["namespace_4cpu16gb_payg_usd"]),
+                money(r["namespace_lowest_list_plan"]["usd"])
+                + " ("
+                + r["namespace_lowest_list_plan"]["plan"]
+                + ")",
+            ]
+            for r in summary["monthly_minute_costs"]
+        ],
+    )
+    lines += [
+        "",
+        "GitHub paid is $0.012/min with whole-minute job rounding. Team/Enterprise membership is separate; Team's shared $18 included compute value can reduce eligible larger-runner charges if still available. Public standard compute remains independently free. [Rates](https://docs.github.com/en/billing/reference/actions-runner-pricing), [allowances/storage](https://docs.github.com/en/billing/concepts/product-billing/github-actions).",
+        "",
+        "Blacksmith 4-vCPU Linux x64 is $0.008/min. Gross values exclude its advertised 3,000 free monthly minutes because first-party allowance normalization at 4 CPUs and rounding could not be verified. The documentation was inaccessible; do not subtract 3,000 raw 4-vCPU minutes without checking the account. [Pricing](https://www.blacksmith.sh/pricing).",
+        "",
+        "Boat default is $0.036/hour, billed per second. Its $20 one-seat plan returns the price as expiring VM credit: base=max($20,usage). Seats, extra starts, extra snapshots and optional services can add cost. [Pricing](https://docs.boat.dev/pricing).",
+        "",
+        "Namespace's tested 4-CPU/16-GB shape consumes **8 Linux unit-minutes per machine minute**, because memory also counts. PAYG is $0.012/min. Team is $100 including 100,000 units; Business $250 including 250,000; additional units cost $0.0015. Cheapest-plan projections assume those allowances are unshared. Billing has a one-minute minimum and a 15-second rounding grace; published examples are 30s→1min, 70s→1min, 150s→3min. Trial credits are excluded. [Namespace pricing](https://namespace.so/pricing).",
+        "",
+        "### Boat job-start sensitivity",
+        "",
+        "A $20 plan includes 12/60/200 starts per minute/hour/day; higher start brackets cost $0.03/$0.05/$0.07 and have hard ceilings. CI can wait instead. Scenarios below assume evenly spaced starts over 30 days and choose the cheapest listed plan plus required extra starts. No subscriptions or extra-start settings were changed. [Limits](https://docs.boat.dev/limits#extra-starts).",
+        "",
+    ]
+    scenarios = []
     for minutes in [1000, 5000, 10000, 50000]:
         five = boat_monthly(minutes * 0.0006, minutes / 5)
         one = boat_monthly(minutes * 0.0006, minutes)
-        start_scenarios.append(
+        scenarios.append(
             {"minutes": minutes, "five_minute_jobs": five, "one_minute_jobs": one}
         )
-        lines.append(
-            f"| {minutes:,} | {money(five['total_usd'])} (plan ${five['plan_usd']}) | {money(one['total_usd'])} (plan ${one['plan_usd']}) |"
-        )
+    lines += table(
+        ["VM min/month", "5-min jobs", "1-min jobs"],
+        [
+            [
+                f"{r['minutes']:,}",
+                money(r["five_minute_jobs"]["total_usd"])
+                + f" (plan ${r['five_minute_jobs']['plan_usd']})",
+                money(r["one_minute_jobs"]["total_usd"])
+                + f" (plan ${r['one_minute_jobs']['plan_usd']})",
+            ]
+            for r in scenarios
+        ],
+    )
     lines += [
         "",
-        "At 50,000 one-minute jobs the $20 plan cannot finish all starts within a 30-day month at its maximum daily start ceiling. Spreading bursts, grouping tiny tasks into one job, queueing, or selecting a different plan changes the economics. The low VM rate alone is insufficient for estimating short-job CI costs.",
+        "At 50,000 one-minute starts the $20 plan cannot finish within a 30-day month at its daily maximum. Bursts, grouping tasks, queueing and other account usage change the result. Each scenario's job duration includes the entire billed VM lifetime.",
         "",
-        "## Same completed work per month",
+        "## Monthly cost for the same completed work",
         "",
-        "One suite = all five workloads as **five separate warm-cache jobs**. Extrapolations use observed job medians; Boat uses median API-reported per-job VM cost, which includes its billing overhead. GitHub paid assumes the observed public timings carry over to an unmeasured paid 4-core runner. Blacksmith shows unrounded–whole-minute-rounded **gross** estimates because rounding was not verified. Boat chooses the cheapest plan under evenly spaced starts over 30 days; bursts or other usage can cost more. Public GitHub compute remains $0 for every row.",
+        "One suite is five separate warm-cache jobs, one per workload. Uses measured job medians; Boat uses median API-reported job costs. Paid GitHub assumes public-runner timings carry over to an unmeasured paid runner. Blacksmith shows unrounded–whole-minute-rounded gross estimates. Namespace uses conservative whole-minute job rounding and shows PAYG / lowest listed plan; it omits the 15-second grace and any VM time outside Actions, so it is a planning estimate. Boat assumes evenly spaced starts over 30 days and cheapest listed plan. Public GitHub remains $0.",
         "",
-        "| Five-job suites/month | GitHub public | GitHub paid 4-core gross, hypothetical | Blacksmith gross range | Boat even-start planning scenario |",
-        "| ---: | ---: | ---: | ---: | ---: |",
     ]
+    rows = []
     for count in [1000, 5000, 10000, 50000]:
         selected = {
             r["provider"]: r
@@ -219,38 +318,70 @@ def publish(run_id):
             if r["five_job_suites"] == count
         }
         boat = boat_monthly(selected["boat"]["boat_measured_vm_base_usd"], count * 5)
-        lines.append(
-            f"| {count:,} | $0 | {money(selected['github']['github_paid_list_rounded_usd'])} | {money(selected['blacksmith']['blacksmith_unrounded_gross_usd'])}–{money(selected['blacksmith']['blacksmith_rounded_gross_usd'])} | {money(boat['total_usd']) + ' (plan $' + str(boat['plan_usd']) + ')' if boat else 'Beyond advertised start ceiling'} |"
+        ns = selected["namespace"]
+        rows.append(
+            [
+                f"{count:,}",
+                "$0",
+                money(selected["github"]["github_paid_list_rounded_usd"]),
+                money(selected["blacksmith"]["blacksmith_unrounded_gross_usd"])
+                + "–"
+                + money(selected["blacksmith"]["blacksmith_rounded_gross_usd"]),
+                money(boat["total_usd"]) + f" (plan ${boat['plan_usd']})"
+                if boat
+                else "Beyond ceiling",
+                money(ns["namespace_ceil_minute_payg_usd"])
+                + " / "
+                + money(ns["namespace_ceil_minute_lowest_plan"]["usd"])
+                + " ("
+                + ns["namespace_ceil_minute_lowest_plan"]["plan"]
+                + ")",
+            ]
         )
+    lines += table(
+        [
+            "Five-job suites/month",
+            "GitHub public",
+            "GitHub paid gross",
+            "Blacksmith gross range",
+            "Boat start scenario",
+            "Namespace PAYG / best plan",
+        ],
+        rows,
+    )
     lines += [
         "",
-        "These are runner-compute planning figures before tax, negotiated discounts and account credits. GitHub Team/Enterprise fees, archive/artifact storage and optional add-ons are excluded from these tables. No sticky disk or retained-build add-on was selected in the measured workloads. GitHub's repository cache allowance is 10 GB; the saved cache set here is small. Blacksmith's account-specific archive-cache allowance/charges were not verified, so the table is not a complete invoice quote. Setup and cold cache-seeding cost are additional when starting a new project; the benchmark's actual seeds are included in the execution-budget evidence.",
+        "Compute estimates exclude tax, negotiated discounts, account credits, GitHub membership, artifact/archive storage and optional add-ons. GitHub includes 10 GB repository cache; Blacksmith's account-specific archive pricing was not verified. Namespace persistent cache volumes were not enabled, so their storage/snapshot fees are not added. Starting new projects also incurs setup and cache-seeding work. These figures are not invoice quotes.",
         "",
         "## Evidence and reproduction",
         "",
-        f"- [Raw workload, runtime and Actions evidence](results/{run_id}/evidence.json)",
-        f"- [Per-sample CSV](results/{run_id}/samples.csv) and [per-stage CSV](results/{run_id}/stages.csv)",
-        f"- [Machine-readable summary](results/{run_id}/summary.json), [Boat usage](results/{run_id}/boat-usage.json) and [cache audit](results/{run_id}/cache-audit.json)",
-        "- [Interactive overview](reports/overview.html)",
-        "- [Methodology and reproduction commands](METHODOLOGY.md)",
+    ]
+    lines += [
+        f"- [Run {run['id']} raw evidence](results/{run['id']}/evidence.json)"
+        for run in runs
+    ]
+    lines += [
+        f"- [Combined summary](results/{dataset}/summary.json), [samples](results/{dataset}/samples.csv), [stage timings/resources](results/{dataset}/stages.csv)",
+        "- [Original cache audit](results/42508215226/cache-audit.json), [Namespace cache audit](results/42512395289/cache-audit.json), [Boat usage](results/42508215226/boat-usage.json)",
+        "- [Interactive overview](reports/overview.html) and [methodology](METHODOLOGY.md)",
         "",
-        "All workflows remain manual. No GCP infrastructure, Depot runs, macOS releases or production operations form part of this experiment.",
+        "All workflows are manual. GCP, Depot, macOS, Docker image-build performance and production operations remain outside this experiment.",
         "",
     ]
     (ROOT / "REPORT.md").write_text("\n".join(lines))
     (path / "boat-cost-scenarios.json").write_text(
-        json.dumps(start_scenarios, indent=2) + "\n"
+        json.dumps(scenarios, indent=2) + "\n"
     )
     html = (
-        (ROOT / "reports" / "template.html")
+        (ROOT / "reports/template.html")
         .read_text()
         .replace("__SUMMARY__", json.dumps(summary).replace("</", "<\\/"))
     )
-    (ROOT / "reports" / "overview.html").write_text(html)
-    print("Published REPORT.md and reports/overview.html")
+    (ROOT / "reports/overview.html").write_text(html)
+    print("Published four-provider REPORT.md and reports/overview.html")
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("run_id", type=int)
-    publish(parser.parse_args().run_id)
+    parser.add_argument("dataset", choices=["comparison"])
+    publish(parser.parse_args().dataset)

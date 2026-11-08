@@ -1,0 +1,57 @@
+[
+  {
+    "job_id": 128828359227,
+    "job": "measure (namespace, nscloud-ubuntu-24.04-amd64-4x16, typescript-compiler, warm, 1) / namespace / typescript-compiler / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42512395289/job/128828359227",
+    "log_excerpt": [
+      "2026-11-08T18:56:46.7372633Z Cache hit for: bench-v1-42512395289-namespace-Linux-X64-typescript-compiler-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:56:47.1320165Z Cache Size: ~52 MB (54767002 B)",
+      "2026-11-08T18:56:47.2410278Z Cache restored successfully",
+      "2026-11-08T18:56:47.2503742Z Cache restored from key: bench-v1-42512395289-namespace-Linux-X64-typescript-compiler-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128828359279,
+    "job": "measure (namespace, nscloud-ubuntu-24.04-amd64-4x16, rust-ripgrep, warm, 1) / namespace / rust-ripgrep / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42512395289/job/128828359279",
+    "log_excerpt": [
+      "2026-11-08T18:56:56.5254737Z Cache hit for: bench-v1-42512395289-namespace-Linux-X64-rust-ripgrep-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:56:56.7845311Z Cache Size: ~26 MB (27065697 B)",
+      "2026-11-08T18:56:56.9749364Z Cache restored successfully",
+      "2026-11-08T18:56:56.9856721Z Cache restored from key: bench-v1-42512395289-namespace-Linux-X64-rust-ripgrep-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128828359334,
+    "job": "measure (namespace, nscloud-ubuntu-24.04-amd64-4x16, rust-regex, warm, 1) / namespace / rust-regex / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42512395289/job/128828359334",
+    "log_excerpt": [
+      "2026-11-08T18:56:57.0699976Z Cache hit for: bench-v1-42512395289-namespace-Linux-X64-rust-regex-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:56:57.4823820Z Cache Size: ~42 MB (44408007 B)",
+      "2026-11-08T18:56:57.9741023Z Cache restored successfully",
+      "2026-11-08T18:56:57.9851190Z Cache restored from key: bench-v1-42512395289-namespace-Linux-X64-rust-regex-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128828487406,
+    "job": "measure (namespace, nscloud-ubuntu-24.04-amd64-4x16, python-jinja, warm, 1) / namespace / python-jinja / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42512395289/job/128828487406",
+    "log_excerpt": [
+      "2026-11-08T18:57:28.0946410Z Cache hit for: bench-v1-42512395289-namespace-Linux-X64-python-jinja-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:57:28.1794077Z Cache Size: ~1 MB (1072662 B)",
+      "2026-11-08T18:57:28.2033000Z Cache restored successfully",
+      "2026-11-08T18:57:28.2131080Z Cache restored from key: bench-v1-42512395289-namespace-Linux-X64-python-jinja-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128828547991,
+    "job": "measure (namespace, nscloud-ubuntu-24.04-amd64-4x16, python-pyperformance, warm, 1) / namespace / python-pyperformance / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42512395289/job/128828547991",
+    "log_excerpt": [
+      "2026-11-08T18:57:43.7741654Z Cache hit for: bench-v1-42512395289-namespace-Linux-X64-python-pyperformance-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:57:44.0270187Z Cache Size: ~16 MB (16262689 B)",
+      "2026-11-08T18:57:44.1172791Z Cache restored successfully",
+      "2026-11-08T18:57:44.1280745Z Cache restored from key: bench-v1-42512395289-namespace-Linux-X64-python-pyperformance-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  }
+]
