@@ -1,0 +1,57 @@
+{
+  "sources": {
+    "typescript": {
+      "repository": "https://github.com/microsoft/TypeScript.git",
+      "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "paths": []
+    },
+    "rustc-perf": {
+      "repository": "https://github.com/rust-lang/rustc-perf.git",
+      "commit": "1cf2db7711855789ef1dd6a6fa9ddb678618d6d5",
+      "paths": [
+        "collector/compile-benchmarks/regex-automata-0.4.8"
+      ]
+    },
+    "ripgrep": {
+      "repository": "https://github.com/BurntSushi/ripgrep.git",
+      "commit": "af60c2de9d85e7f3d81c78601669468cf02dabab",
+      "paths": [],
+      "release": "15.1.0"
+    },
+    "jinja": {
+      "repository": "https://github.com/pallets/jinja.git",
+      "commit": "5ef70112a1ff19c05324ff889dd30405b1002044",
+      "paths": []
+    }
+  },
+  "workloads": {
+    "typescript-compiler": {
+      "source": "typescript",
+      "path": ".",
+      "kind": "typescript",
+      "description": "TypeScript 6.0.3 compiler: locked dependency installation, type checking, emit, esbuild bundling and parser verification"
+    },
+    "rust-regex": {
+      "source": "rustc-perf",
+      "path": "collector/compile-benchmarks/regex-automata-0.4.8",
+      "kind": "rust-library",
+      "description": "Rust compiler team's regex-automata corpus: dependency fetch, check and clean release build"
+    },
+    "rust-ripgrep": {
+      "source": "ripgrep",
+      "path": ".",
+      "kind": "rust-application",
+      "description": "Real CLI workspace: clean optimized compilation, library tests and deterministic text search"
+    },
+    "python-jinja": {
+      "source": "jinja",
+      "path": ".",
+      "kind": "python-tests",
+      "description": "Real Python library: locked environment, upstream pytest suite and template rendering"
+    },
+    "python-pyperformance": {
+      "kind": "python-runtime",
+      "description": "Python's pyperformance 1.14.0: a small JSON and regex CPU-runtime subset"
+    }
+  }
+}

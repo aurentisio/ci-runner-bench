@@ -1,0 +1,127 @@
+{
+  "kind": "provider-capability-smoke",
+  "speed_ranking": false,
+  "runs": [
+    {
+      "run_id": 42506638283,
+      "provider": "boat",
+      "conclusion": "failure",
+      "job_seconds": 30.0,
+      "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42506638283/job/128810590929"
+    },
+    {
+      "run_id": 42506638283,
+      "provider": "github",
+      "conclusion": "failure",
+      "job_seconds": 30.0,
+      "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42506638283/job/128810591033"
+    },
+    {
+      "run_id": 42506638283,
+      "provider": "blacksmith",
+      "conclusion": "failure",
+      "job_seconds": 19.0,
+      "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42506638283/job/128810591085"
+    },
+    {
+      "run_id": 42506897147,
+      "provider": "blacksmith",
+      "conclusion": "success",
+      "job_seconds": 19.0,
+      "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42506897147/job/128811372734"
+    },
+    {
+      "run_id": 42506897147,
+      "provider": "github",
+      "conclusion": "success",
+      "job_seconds": 30.0,
+      "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42506897147/job/128811372939"
+    },
+    {
+      "run_id": 42506897147,
+      "provider": "boat",
+      "conclusion": "success",
+      "job_seconds": 31.0,
+      "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42506897147/job/128811372970"
+    }
+  ],
+  "checks": [
+    {
+      "provider": "blacksmith",
+      "commit": "270dfd83ab580832515f2ca91002f341faf501a5",
+      "passed": true,
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "memory_kib": 16168148,
+      "cpu_quota": null,
+      "tool_versions": {
+        "mise": "2026.11.4 linux-x64 (2026-11-07)",
+        "node": "v26.9.0",
+        "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+        "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+        "uv": "uv 0.11.21 (x86_64-unknown-linux-gnu)",
+        "python": "3.13.9"
+      },
+      "cache": {
+        "bytes": 1048576,
+        "sha256": "ba48c033547ece0b751c182b8a681cdaef29971e88c94aa029fad86233cdfb40",
+        "verified": true
+      }
+    },
+    {
+      "provider": "boat",
+      "commit": "270dfd83ab580832515f2ca91002f341faf501a5",
+      "passed": true,
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "memory_kib": 8131944,
+      "cpu_quota": null,
+      "tool_versions": {
+        "mise": "2026.11.4 linux-x64 (2026-11-07)",
+        "node": "v26.9.0",
+        "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+        "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+        "uv": "uv 0.11.21 (x86_64-unknown-linux-gnu)",
+        "python": "3.13.9"
+      },
+      "cache": {
+        "bytes": 1048576,
+        "sha256": "ba48c033547ece0b751c182b8a681cdaef29971e88c94aa029fad86233cdfb40",
+        "verified": true
+      }
+    },
+    {
+      "provider": "github",
+      "commit": "270dfd83ab580832515f2ca91002f341faf501a5",
+      "passed": true,
+      "cpu_count": 4,
+      "cpu_affinity_count": 4,
+      "memory_kib": 16366512,
+      "cpu_quota": null,
+      "tool_versions": {
+        "mise": "2026.11.4 linux-x64 (2026-11-07)",
+        "node": "v26.9.0",
+        "rustc": "rustc 1.90.0 (1159e78c4 2025-09-14)",
+        "cargo": "cargo 1.90.0 (840b83a10 2025-07-30)",
+        "uv": "uv 0.11.21 (x86_64-unknown-linux-gnu)",
+        "python": "3.13.9"
+      },
+      "cache": {
+        "bytes": 1048576,
+        "sha256": "ba48c033547ece0b751c182b8a681cdaef29971e88c94aa029fad86233cdfb40",
+        "verified": true
+      }
+    }
+  ],
+  "budget_limit_seconds_per_provider": 12000,
+  "spent_job_seconds_per_provider": {
+    "github": 60.0,
+    "blacksmith": 38.0,
+    "boat": 61.0
+  },
+  "notes": [
+    "The first run passed the functional checks but failed artifact upload because hidden files were excluded.",
+    "The second run passed every step on every provider.",
+    "Job seconds include failed runs but exclude queue/provisioning time; this is not an invoice."
+  ]
+}
