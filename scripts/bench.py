@@ -1,15 +1,15 @@
-"""Small workload harness. Cloud orchestration is deliberately manual in this phase."""
+"""Run one pinned workload and record correctness, timing, and resource evidence."""
 
 import argparse
 import hashlib
 import json
 import os
 import platform
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 SPEC = json.loads((ROOT / "workloads.json").read_text())

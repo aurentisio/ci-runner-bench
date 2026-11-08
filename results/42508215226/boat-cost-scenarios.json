@@ -1,0 +1,54 @@
+[
+  {
+    "minutes": 1000,
+    "five_minute_jobs": {
+      "plan_usd": 20,
+      "starts_usd": 0.0,
+      "total_usd": 20.0
+    },
+    "one_minute_jobs": {
+      "plan_usd": 20,
+      "starts_usd": 0.0,
+      "total_usd": 20.0
+    }
+  },
+  {
+    "minutes": 5000,
+    "five_minute_jobs": {
+      "plan_usd": 20,
+      "starts_usd": 0.0,
+      "total_usd": 20.0
+    },
+    "one_minute_jobs": {
+      "plan_usd": 20,
+      "starts_usd": 0.0,
+      "total_usd": 20.0
+    }
+  },
+  {
+    "minutes": 10000,
+    "five_minute_jobs": {
+      "plan_usd": 20,
+      "starts_usd": 0.0,
+      "total_usd": 20.0
+    },
+    "one_minute_jobs": {
+      "plan_usd": 100,
+      "starts_usd": 0.0,
+      "total_usd": 100.0
+    }
+  },
+  {
+    "minutes": 50000,
+    "five_minute_jobs": {
+      "plan_usd": 100,
+      "starts_usd": 0.0,
+      "total_usd": 100.0
+    },
+    "one_minute_jobs": {
+      "plan_usd": 500,
+      "starts_usd": 0.0,
+      "total_usd": 500.0
+    }
+  }
+]

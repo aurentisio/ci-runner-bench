@@ -1,0 +1,104 @@
+[
+  {
+    "job_id": 128816101894,
+    "job": "measure (blacksmith, blacksmith-4vcpu-ubuntu-2404, typescript-compiler, warm, 1) / blacksmith / typescript-compiler / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816101894",
+    "log_excerpt": [
+      "2026-11-08T18:08:27.5638008Z Enabling Blacksmith transparent cache",
+      "2026-11-08T18:08:34.4768417Z Cache hit for: bench-v1-42508215226-blacksmith-Linux-X64-typescript-compiler-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:08:34.5770268Z Cache Size: ~52 MB (54764665 B)",
+      "2026-11-08T18:08:34.6220538Z Cache restored successfully",
+      "2026-11-08T18:08:34.6431385Z Cache restored from key: bench-v1-42508215226-blacksmith-Linux-X64-typescript-compiler-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128816101986,
+    "job": "measure (github, ubuntu-24.04, typescript-compiler, warm, 1) / github / typescript-compiler / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816101986",
+    "log_excerpt": [
+      "2026-11-08T18:08:37.8686761Z Cache hit for: bench-v1-42508215226-github-Linux-X64-typescript-compiler-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:08:38.7293186Z Cache Size: ~52 MB (54772598 B)",
+      "2026-11-08T18:08:38.8313033Z Cache restored successfully",
+      "2026-11-08T18:08:38.8510060Z Cache restored from key: bench-v1-42508215226-github-Linux-X64-typescript-compiler-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128816102013,
+    "job": "measure (boat, boat, typescript-compiler, warm, 1) / boat / typescript-compiler / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816102013",
+    "log_excerpt": [
+      "2026-11-08T18:08:44.5903703Z Cache hit for: bench-v1-42508215226-boat-Linux-X64-typescript-compiler-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:08:57.5523930Z Cache Size: ~52 MB (54819041 B)",
+      "2026-11-08T18:08:57.6020773Z Cache restored successfully",
+      "2026-11-08T18:08:57.6181677Z Cache restored from key: bench-v1-42508215226-boat-Linux-X64-typescript-compiler-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128816385761,
+    "job": "measure (blacksmith, blacksmith-4vcpu-ubuntu-2404, rust-regex, warm, 1) / blacksmith / rust-regex / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816385761",
+    "log_excerpt": [
+      "2026-11-08T18:09:35.2464094Z Enabling Blacksmith transparent cache",
+      "2026-11-08T18:09:44.0885108Z Cache hit for: bench-v1-42508215226-blacksmith-Linux-X64-rust-regex-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:09:44.2275775Z Cache Size: ~42 MB (44386632 B)",
+      "2026-11-08T18:09:44.4827614Z Cache restored successfully",
+      "2026-11-08T18:09:44.5095518Z Cache restored from key: bench-v1-42508215226-blacksmith-Linux-X64-rust-regex-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128816397882,
+    "job": "measure (boat, boat, rust-regex, warm, 1) / boat / rust-regex / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816397882",
+    "log_excerpt": [
+      "2026-11-08T18:09:53.0953781Z Cache hit for: bench-v1-42508215226-boat-Linux-X64-rust-regex-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:10:02.8640791Z Cache Size: ~35 MB (37042231 B)",
+      "2026-11-08T18:10:03.0006001Z Cache restored successfully",
+      "2026-11-08T18:10:03.0119008Z Cache restored from key: bench-v1-42508215226-boat-Linux-X64-rust-regex-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128816420363,
+    "job": "measure (github, ubuntu-24.04, rust-regex, warm, 1) / github / rust-regex / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816420363",
+    "log_excerpt": [
+      "2026-11-08T18:09:48.5863358Z Cache hit for: bench-v1-42508215226-github-Linux-X64-rust-regex-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:09:49.5551839Z Cache Size: ~42 MB (44415692 B)",
+      "2026-11-08T18:09:49.9348542Z Cache restored successfully",
+      "2026-11-08T18:09:49.9493913Z Cache restored from key: bench-v1-42508215226-github-Linux-X64-rust-regex-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128816756591,
+    "job": "measure (blacksmith, blacksmith-4vcpu-ubuntu-2404, python-jinja, warm, 1) / blacksmith / python-jinja / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816756591",
+    "log_excerpt": [
+      "2026-11-08T18:10:59.2173048Z Enabling Blacksmith transparent cache",
+      "2026-11-08T18:11:08.9601474Z Cache hit for: bench-v1-42508215226-blacksmith-Linux-X64-python-jinja-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:11:08.9957698Z Cache Size: ~1 MB (1076634 B)",
+      "2026-11-08T18:11:09.0098716Z Cache restored successfully",
+      "2026-11-08T18:11:09.0174048Z Cache restored from key: bench-v1-42508215226-blacksmith-Linux-X64-python-jinja-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128816800403,
+    "job": "measure (boat, boat, python-jinja, warm, 1) / boat / python-jinja / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816800403",
+    "log_excerpt": [
+      "2026-11-08T18:12:23.8512472Z Cache hit for: bench-v1-42508215226-boat-Linux-X64-python-jinja-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:12:26.2617917Z Cache Size: ~1 MB (1086494 B)",
+      "2026-11-08T18:12:26.2712966Z Cache restored successfully",
+      "2026-11-08T18:12:26.2796714Z Cache restored from key: bench-v1-42508215226-boat-Linux-X64-python-jinja-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  },
+  {
+    "job_id": 128816828758,
+    "job": "measure (github, ubuntu-24.04, python-jinja, warm, 1) / github / python-jinja / warm / 1",
+    "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226/job/128816828758",
+    "log_excerpt": [
+      "2026-11-08T18:11:21.4721425Z Cache hit for: bench-v1-42508215226-github-Linux-X64-python-jinja-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159",
+      "2026-11-08T18:11:22.2577518Z Cache Size: ~1 MB (1083956 B)",
+      "2026-11-08T18:11:22.2794734Z Cache restored successfully",
+      "2026-11-08T18:11:22.2943446Z Cache restored from key: bench-v1-42508215226-github-Linux-X64-python-jinja-f3de92951253f6714fc23c151c2e5dca42def6b3ad76ebf542236171f923d159"
+    ]
+  }
+]

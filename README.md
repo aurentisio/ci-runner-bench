@@ -3,6 +3,12 @@
 Small, manually triggered CI experiments on GitHub-hosted, Blacksmith and Boat
 runners. This repository contains no application or production credentials.
 
+**The full benchmark is complete:** all 105 workload jobs passed, covering five
+workloads, cold/warm package caches and three repetitions on every provider.
+Read the [speed and monthly-cost report](REPORT.md), open the
+[interactive overview](reports/overview.html), or inspect the
+[raw evidence](results/42508215226/evidence.json).
+
 ## First run
 
 The **Provider smoke** workflow runs one job per provider. It validates checkout,
@@ -71,27 +77,36 @@ Per-stage timing and pass/fail JSON is written to `.bench/results/`. Raw
 pyperformance output stays in the workload's work directory. Local validation
 is for correctness only and is not part of cloud rankings.
 
-## Measurement phase, after the smoke gate
+## Full benchmark
 
-The full cloud benchmark matrix is not enabled yet. Start with five workloads,
-cold/warm dependency states and three fresh-runner samples each. Keep identical
-commands and cache contents, while using each provider's supported cache backend.
-Seeding, slow samples, failures and retries count toward the 200-minute budget.
-Use remaining time for provider-native optimizations as a separately labelled
-experiment; do not mix snapshots, retained build outputs or incremental builds
-into the matched comparison.
+The manual **Benchmark** workflow runs five cache-seeding jobs per provider,
+then three cold and three warm fresh-runner samples per workload/provider.
+All seeds must pass before measurement starts. Six matrix jobs run at once;
+each workload job has a five-minute timeout. No benchmark starts on push or PR.
 
-Record queue/startup time separately from job execution, tooling, cache transfer,
-source fetch, dependencies, build/test work and upload/teardown. Report medians,
-ranges and failures; three samples do not establish tail-latency percentiles.
-Keep hardware and memory differences visible. No speed ranking is inferred from
-the smoke check.
+```sh
+gh workflow run benchmark.yml --repo aurentisio/ci-runner-bench --ref main \
+  -f provider=all -f workload=all
+# After completion, use its run ID:
+python scripts/collect.py RUN_ID
+python scripts/analyze.py RUN_ID
+# Rebuild the reviewed report for this archived experiment:
+python scripts/publish.py 42508215226
+```
 
-The final cost model will show 1,000 / 5,000 / 10,000 / 50,000 runner-minutes per
-month and equal numbers of completed workloads. Include weighted allowances,
-subscriptions, cache storage and setup costs. Public/free and private/paid usage
-must be separate; dollar totals must not assume every provider normalizes minutes
-the same way. Cost data is not available from the smoke probe alone.
+The scripts preserve and validate per-stage timing, resource use, environment,
+cache admission and Actions metadata. Provider-native archive caches retain only
+package dependencies. Incremental build outputs, VM snapshots and sticky disks
+are separate experiments. The run-specific Boat usage and cache audit were
+collected through its CLI and GitHub logs; `analyze.py` requires the Boat usage
+file before producing billing projections. The narrative report and overview
+contain findings specific to the first run and must be reviewed for any rerun.
+
+See [METHODOLOGY.md](METHODOLOGY.md) for metric definitions, limitations and budget
+accounting. [REPORT.md](REPORT.md) includes medians/ranges, cache effectiveness,
+1k/5k/10k/50k monthly-minute projections and equal-workload cost scenarios.
+Public GitHub and hypothetical paid 4-core GitHub prices are separate. Unknown
+Blacksmith allowance normalization/rounding and Boat's job-start costs are explicit.
 
 ## Pilot status
 
@@ -111,4 +126,6 @@ Jinja tests, ripgrep library tests and exact search-count verification. Warm
 cache admission and clean rebuilds were also exercised on TypeScript and the
 Rust regex corpus. Ripgrep is pinned to release 15.1.0 because newer development
 commits require a newer Rust compiler than this suite's shared pinned toolchain.
-No full performance matrix has been launched.
+The [full performance matrix](https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226)
+subsequently passed all 106 jobs including planning. Including pilots and seeds,
+execution totaled 26.85 minutes on GitHub, 18.70 on Blacksmith and 28.60 on Boat.
