@@ -1,0 +1,12 @@
+{
+  "run_id": 42512002388,
+  "job_id": 128826876609,
+  "url": "https://github.com/aurentisio/ci-runner-bench/actions/runs/42512002388",
+  "conclusion": "success",
+  "runner_label": "nscloud-ubuntu-24.04-amd64-4x16",
+  "started_at": "2026-11-08T18:50:47Z",
+  "completed_at": "2026-11-08T18:51:02Z",
+  "execution_seconds": 15,
+  "speed_ranking": false,
+  "native_persistent_cache_tested": false
+}

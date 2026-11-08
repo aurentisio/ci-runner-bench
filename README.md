@@ -129,3 +129,17 @@ commits require a newer Rust compiler than this suite's shared pinned toolchain.
 The [full performance matrix](https://github.com/aurentisio/ci-runner-bench/actions/runs/42508215226)
 subsequently passed all 106 jobs including planning. Including pilots and seeds,
 execution totaled 26.85 minutes on GitHub, 18.70 on Blacksmith and 28.60 on Boat.
+
+## Namespace readiness
+
+Namespace is connected to `aurentisio` and can access this repository. Its
+[readiness run](https://github.com/aurentisio/ci-runner-bench/actions/runs/42512002388)
+passed checkout, the pinned toolchains, TypeScript/Rust/Python probes, Docker,
+byte-verified 1 MiB archive-cache save/restore and artifact upload. The job used
+`nscloud-ubuntu-24.04-amd64-4x16`, exposed four CPUs and about 16 GB RAM, and took
+15 seconds of Actions execution. [Readiness evidence](results/namespace-readiness)
+is preserved separately from the original three-provider benchmark.
+
+This is a connectivity/capability check. Namespace has not yet run the full
+workload matrix, and these smoke timings do not establish a speed ranking.
+Namespace's native persistent cache volumes were not exercised by this check.

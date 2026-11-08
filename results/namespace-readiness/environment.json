@@ -1,0 +1,155 @@
+{
+  "provider": "namespace",
+  "commit": "151479b2a98493904abf95fb629a91a0e8802a42",
+  "platform": "Linux-7.1.4-x86_64-with-glibc2.39",
+  "cpu_count": 4,
+  "cpu_affinity_count": 4,
+  "python": "3.13.9",
+  "resources": {
+    "/etc/os-release": "PRETTY_NAME=\"Ubuntu 24.04.5 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"24.04\"\nVERSION=\"24.04.5 LTS (Noble Numbat)\"\nVERSION_CODENAME=noble\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=noble\nLOGO=ubuntu-logo\n",
+    "/proc/meminfo": "MemTotal:       16438740 kB\nMemFree:        12405648 kB\nMemAvailable:   15074424 kB\nBuffers:           69304 kB\nCached:          2840316 kB\nSwapCached:            0 kB\nActive:           463668 kB\nInactive:        2642160 kB\nActive(anon):       4984 kB\nInactive(anon):   234632 kB\nActive(file):     458684 kB\nInactive(file):  2407528 kB\nUnevictable:           0 kB\nMlocked:               0 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:           1285960 kB\nWriteback:             0 kB\nAnonPages:        196200 kB\nMapped:           332476 kB\nShmem:             43236 kB\nKReclaimable:     111844 kB\nSlab:             146392 kB\nSReclaimable:     111844 kB\nSUnreclaim:        34548 kB\nKernelStack:        3844 kB\nPageTables:         4292 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     8219368 kB\nCommitted_AS:    1326136 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:       23748 kB\nVmallocChunk:          0 kB\nPercpu:             1152 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:    542720 kB\nFilePmdMapped:         0 kB\nBalloon:               0 kB\nGPUActive:             0 kB\nGPUReclaim:            0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:       18432 kB\nDirectMap2M:     2078720 kB\nDirectMap1G:    16777216 kB\n",
+    "/sys/fs/cgroup/cpu.max": "max 100000\n",
+    "/sys/fs/cgroup/memory.max": "max\n"
+  },
+  "stages": [
+    {
+      "command": [
+        "mise",
+        "--version"
+      ],
+      "seconds": 0.0028153240000001745,
+      "stdout": "2026.11.4 linux-x64 (2026-11-07)\n"
+    },
+    {
+      "command": [
+        "node",
+        "--version"
+      ],
+      "seconds": 0.0023348429999998643,
+      "stdout": "v26.9.0\n"
+    },
+    {
+      "command": [
+        "rustc",
+        "--version"
+      ],
+      "seconds": 0.011371304000000748,
+      "stdout": "rustc 1.90.0 (1159e78c4 2025-09-14)\n"
+    },
+    {
+      "command": [
+        "cargo",
+        "--version"
+      ],
+      "seconds": 0.009243606999998377,
+      "stdout": "cargo 1.90.0 (840b83a10 2025-07-30)\n"
+    },
+    {
+      "command": [
+        "uv",
+        "--version"
+      ],
+      "seconds": 0.0028348129999997695,
+      "stdout": "uv 0.11.21 (x86_64-unknown-linux-gnu)\n"
+    },
+    {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "seconds": 0.48337576000000126,
+      "stdout": "\nadded 3 packages in 437ms\n"
+    },
+    {
+      "command": [
+        "node",
+        "node_modules/typescript/bin/tsc",
+        ".smoke/probe.ts",
+        "--outDir",
+        ".smoke/js",
+        "--strict",
+        "--skipLibCheck",
+        "--target",
+        "ES2022"
+      ],
+      "seconds": 0.2385960020000013,
+      "stdout": ""
+    },
+    {
+      "command": [
+        "node",
+        ".smoke/js/probe.js"
+      ],
+      "seconds": 0.013299164000002861,
+      "stdout": ""
+    },
+    {
+      "command": [
+        "rustc",
+        "--edition=2024",
+        "-O",
+        ".smoke/probe.rs",
+        "-o",
+        ".smoke/rust-probe"
+      ],
+      "seconds": 0.04705496299999723,
+      "stdout": ""
+    },
+    {
+      "command": [
+        "/home/runner/work/ci-runner-bench/ci-runner-bench/.smoke/rust-probe"
+      ],
+      "seconds": 0.0007108179999981701,
+      "stdout": "Rust probe passed\n"
+    },
+    {
+      "command": [
+        "uv",
+        "sync",
+        "--frozen"
+      ],
+      "seconds": 0.37845243900000014,
+      "stdout": ""
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "--frozen",
+        "python",
+        "-c",
+        "import json, pyperformance; assert json.loads(json.dumps({\"answer\": 42}))[\"answer\"] == 42; print(\"Python probe passed\")"
+      ],
+      "seconds": 0.12047239600000026,
+      "stdout": "Python probe passed\n"
+    },
+    {
+      "command": [
+        "docker",
+        "info",
+        "--format",
+        "{{.ServerVersion}}"
+      ],
+      "seconds": 0.09558587000000074,
+      "stdout": "29.9.1-namespace\n"
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--network",
+        "none",
+        "alpine:3.22.2",
+        "sh",
+        "-c",
+        "test 42 -eq 42"
+      ],
+      "seconds": 0.8046157889999996,
+      "stdout": ""
+    }
+  ],
+  "passed": true
+}
