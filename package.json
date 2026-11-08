@@ -1,0 +1,9 @@
+{
+  "name": "ci-runner-bench",
+  "private": true,
+  "version": "0.0.0",
+  "devDependencies": {
+    "esbuild": "0.28.2",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,70 @@
+name: Provider smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: provider-smoke
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    name: Smoke / ${{ matrix.provider.name }}
+    runs-on: ${{ matrix.provider.runner }}
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        provider:
+          - name: github
+            runner: ubuntu-24.04
+          - name: blacksmith
+            runner: blacksmith-4vcpu-ubuntu-2404
+          - name: boat
+            runner: boat
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pinned tools
+        uses: jdx/mise-action@v4
+        with:
+          version: 2026.11.4
+          cache: false
+
+      - name: Check toolchains and Docker
+        env:
+          BENCH_PROVIDER: ${{ matrix.provider.name }}
+        run: python scripts/smoke.py
+
+      - name: Save cache probe
+        uses: actions/cache/save@v6
+        with:
+          path: .smoke/cache
+          key: smoke-v1-${{ matrix.provider.name }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Remove local cache probe
+        run: python -c 'import shutil; shutil.rmtree(".smoke/cache")'
+
+      - name: Restore cache probe
+        uses: actions/cache/restore@v6
+        with:
+          path: .smoke/cache
+          key: smoke-v1-${{ matrix.provider.name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          fail-on-cache-miss: true
+
+      - name: Verify restored bytes
+        run: python scripts/smoke.py --verify-cache
+
+      - name: Upload smoke evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-${{ matrix.provider.name }}
+          path: .smoke/*.json
+          if-no-files-found: error
+          retention-days: 14

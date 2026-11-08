@@ -1,0 +1,8 @@
+[project]
+name = "ci-runner-bench"
+version = "0.0.0"
+requires-python = ">=3.13,<3.14"
+dependencies = ["pyperformance==1.14.0"]
+
+[tool.uv]
+package = false
