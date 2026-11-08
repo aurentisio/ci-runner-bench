@@ -1,0 +1,62 @@
+name: Namespace readiness
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: namespace-readiness
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    name: Namespace / Ubuntu 24.04 / 4 CPU / 16 GB
+    runs-on: nscloud-ubuntu-24.04-amd64-4x16
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Setup pinned tools
+        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+        with:
+          version: 2026.11.4
+          cache: false
+
+      - name: Check toolchains and Docker
+        env:
+          BENCH_PROVIDER: namespace
+        run: python scripts/smoke.py
+
+      - name: Save cache probe
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: .smoke/cache
+          key: smoke-v1-namespace-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Remove local cache probe
+        run: python -c 'import shutil; shutil.rmtree(".smoke/cache")'
+
+      - name: Restore cache probe
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: .smoke/cache
+          key: smoke-v1-namespace-${{ github.run_id }}-${{ github.run_attempt }}
+          fail-on-cache-miss: true
+
+      - name: Verify restored bytes
+        run: python scripts/smoke.py --verify-cache
+
+      - name: Upload smoke evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: smoke-namespace
+          path: .smoke/*.json
+          if-no-files-found: error
+          retention-days: 14
+          include-hidden-files: true
